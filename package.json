@@ -1,0 +1,26 @@
+{
+  "name": "xandr-report-tool",
+  "version": "1.0.0",
+  "description": "This repository contains a Node.js application designed to interact with the Xandr API. The tool fetches and displays viewability reports for specified publishers and ad slots. It's built for internal use to aid in analyzing ad performance data and is expected to evolve over time as we understand more about our reporting needs. This project is part of an ongoing effort to automate and enhance our advertising analytics capabilities.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codetipster/xandr-report-tool.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codetipster/xandr-report-tool/issues"
+  },
+  "homepage": "https://github.com/codetipster/xandr-report-tool#readme",
+  "dependencies": {
+    "anx-api": "^8.0.3",
+    "axios": "^1.4.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  }
+}
