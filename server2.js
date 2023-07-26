@@ -28,30 +28,34 @@ anxApi.login(username, password).then((token) => {
     console.log('Authenticated successfully. The session token is saved here for the future', token);
     app.get('/fetch-report', (req, res) => {
         const reportRequestData = {
-            report: {
-              "report_type": "network_analytics",
-              "columns": [
-                "publisher_id", 
-                "publisher_name", 
-                "size", 
-                "campaign_id", 
-                "campaign_name", 
-                "campaign_code", 
-                "campaign_priority", 
-                "campaign_type", 
-                "creative_id", 
-                "creative_name", 
-                "creative_code", 
-                "size", 
-                "brand_id", 
-                "brand_name", 
-                "billing_period.start_date", 
-                "billing_period.end_date", 
-                "view_rate", 
-                "view_measurement_rate"
-              ],
-              "report_interval": "yesterday",
-            }
+            
+                "report": {
+                    "report_type": "network_analytics",
+                    "columns": [
+                        "publisher_name",
+                        "day",
+                        "size",
+                        "imps",
+                        "view_rate",
+                        "viewdef_view_rate"
+                    ],
+                    "filters": [
+                        {
+                            "publisher_id": "1000494"
+                        }
+                    ],
+                    "format": "csv",
+                    "orders": [
+                        {
+                            "order_by": "day",
+                            "direction": "ASC"
+                        }
+                    ],
+                    "timezone": "Europe/Berlin",
+                    "start_date": "2023-07-24 00:00:00",
+                "end_date": "2023-07-25 00:00:00"
+                }
+            
           };
           
           
