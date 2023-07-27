@@ -26,6 +26,8 @@ anxApi.login(username, password).then((token) => {
     // Set the token for future requests
     anxApi.token = token;
     console.log('Authenticated successfully. The session token is saved here for the future', token);
+
+    
     app.get('/fetch-report', (req, res) => {
         const reportRequestData = {
             

@@ -1,0 +1,34 @@
+require('dotenv').config();
+
+module.exports = {
+  development: { 
+    xandr: {
+      username: process.env.DEV_XANDR_USERNAME,
+      password: process.env.DEV_XANDR_PASSWORD,
+      apiUrl: 'https://api.appnexus.com',
+    },
+    app: {
+      port: process.env.DEV_PORT || 3000,
+    }
+  },
+  test: { 
+    xandr: {
+      username: process.env.TEST_XANDR_USERNAME,
+      password: process.env.TEST_XANDR_PASSWORD,
+      apiUrl: 'https://api.appnexus.com',
+    },
+    app: {
+      port: process.env.TEST_PORT || 3001,
+    }
+  },
+  production: { 
+    xandr: {
+      username: process.env.PROD_XANDR_USERNAME,
+      password: process.env.PROD_XANDR_PASSWORD,
+      apiUrl: 'https://api.appnexus.com',
+    },
+    app: {
+      port: process.env.PROD_PORT || 3002,
+    }
+  }
+};
