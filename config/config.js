@@ -3,12 +3,12 @@ require('dotenv').config();
 module.exports = {
   development: { 
     xandr: {
-      username: process.env.DEV_XANDR_USERNAME,
-      password: process.env.DEV_XANDR_PASSWORD,
+      username: process.env.XANDR_USERNAME,
+      password: process.env.XANDR_PASSWORD,
       apiUrl: 'https://api.appnexus.com',
     },
     app: {
-      port: process.env.DEV_PORT || 3000,
+      port: process.env.DEV_PORT || 5000,
     }
   },
   test: { 
