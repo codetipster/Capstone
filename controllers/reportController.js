@@ -3,6 +3,7 @@ const fs = require('fs');
 const env = process.env.NODE_ENV || 'development'; // Get current environment
 const config = require('../config/config')[env]; // Import the correct environment config
 const AnxApi = require('anx-api').AnxApi;
+const csvtojson = require('csvtojson');
 
 
 var anxApi = new AnxApi({
@@ -36,6 +37,7 @@ const getReport = (req, res) => {
       "end_date": "2023-07-25 00:00:00"
     }
   };
+
   
   anxApi.post('report', reportRequestData)
     .then(reportResponse => {
@@ -50,12 +52,15 @@ const getReport = (req, res) => {
               responseType: 'stream'
             })
             .then(response => {
-              const file = fs.createWriteStream(`./${reportId}.csv`);
-              response.data.pipe(file);
-              file.on('finish', () => {
-                file.close();
-                res.send('Report downloaded successfully');
-              });
+              const csvStream = response.data;
+              const jsonObjects = [];
+              csvStream.pipe(csvtojson())
+                .on('data', jsonObj => jsonObjects.push(JSON.parse(jsonObj)))
+                .on('end', () => res.json(jsonObjects))
+                .on('error', err => {
+                  console.error(err);
+                  res.status(500).send('Failed to convert CSV to JSON');
+                });
             })
             .catch(err => {
               console.error(err);

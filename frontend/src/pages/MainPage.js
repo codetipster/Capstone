@@ -1,7 +1,10 @@
-import React from 'react';
-import { Box, AppBar, Toolbar, IconButton, Badge, Drawer, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, InputBase, Divider, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, AppBar, Toolbar, IconButton, Badge, Drawer, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, InputBase, Divider, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { Menu as MenuIcon, Mail as MailIcon, Notifications as NotificationsIcon, AccountCircle, Dashboard as DashboardIcon, Search as SearchIcon } from '@mui/icons-material';
 import { alpha } from '@mui/material/styles';
+
+
+
 
 const MainPage = () => {
   const [open, setOpen] = React.useState(false);
@@ -22,6 +25,35 @@ const MainPage = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  // Fetch data from backend
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken'); // Replace 'token' with the actual key you used to store your token
+  
+    fetch('http://localhost:5000/fetch-report', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(`Server response was not ok. Status: ${response.status} ${response.statusText}`);
+
+      }
+    })
+    .then(data => {
+      console.log('Fetched data:', data);
+      setData(data);
+    })
+    .catch(error => console.error('Error:', error));
+  }, []);
+  
+ 
+  console.log('Data:', data);
 
   const drawer = (
     <div>
@@ -141,12 +173,30 @@ const MainPage = () => {
         <Typography variant="h4" gutterBottom>
             Welcome to the Main Page!
         </Typography>
-        <Typography variant="body1">
-            Here is some more detailed text content for you to read. 
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-            Dolorum voluptas culpa eveniet repellendus, molestias libero 
-            ipsa aliquam dolorem perferendis autem!
-        </Typography>
+        <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Publisher ID</TableCell>
+            <TableCell>Publisher Name</TableCell>
+            <TableCell>Size</TableCell>
+            <TableCell>View Rate</TableCell>
+            <TableCell>View Measurement Rate</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map((row, index) => (
+            <TableRow key={index}>
+              <TableCell>{row.publisher_id}</TableCell>
+              <TableCell>{row.publisher_name}</TableCell>
+              <TableCell>{row.size}</TableCell>
+              <TableCell>{row.view_rate}</TableCell>
+              <TableCell>{row.view_measurement_rate}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
         </Box>
       </main>
 
