@@ -2,6 +2,25 @@
 
 This repository contains a Node.js application designed to interact with the Xandr API. The tool fetches and displays viewability reports for specified publishers and ad slots. It's built for internal use to aid in analyzing ad performance data and is expected to evolve over time as we understand more about our reporting needs. This project is part of an ongoing effort to automate and enhance our advertising analytics capabilities...
 
+## CI / CD
+
+### Pipeline Sketch
++-------------+     +-------------+    +-------------+    +-------------+
+|             |     |             |    |             |    |             |
+| Local Dev   +----->  GitHub     +---->   CI Server +---->  CD Server |
+|             |     |             |    |             |    |             |
++-------------+     +-------------+    +-------------+    +-------------+
+       |                   |                  |                  |
+       |                   |                  |                  |
+  Code/Debug         Version Control   Build/Tests         Deployment
+
+
+
+* Local Development: This stage initiates on your personal computer, where you create and initially test your code.
+* GitHub (Version Control System): Following the successful local development and testing, your code is then committed and pushed to GitHub, which serves as our version control system. In addition to the code, associated materials such as documentation, images, or configuration files that exist in your repository also get transferred to GitHub.
+* Continuous Integration (CI) Server: Each time a new commit is made to GitHub, it triggers our CI server. This server automatically fetches the most recent code along with any associated materials. The CI server then executes a series of automated tests on this code.
+* Continuous Deployment (CD) Server: Upon the successful build of the project and passing of all tests by the CI server, the CD server steps in. It retrieves the code and any needed materials either directly from GitHub or the CI server. The code then gets deployed to a staging environment for further testing, and upon successful validation, it's deployed to the production environment.
+
 ## Prerequisites
 
 Node.js & npm
