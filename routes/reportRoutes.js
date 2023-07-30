@@ -1,20 +1,36 @@
-// routes/reportRoutes.js
 const express = require('express');
-const { check } = require('express-validator');
-const { authenticate, getReport } = require('../controllers/reportController');
-const auth = require('../middlewares/auth');
+const session = require('express-session');
+const reportRoutes = require('./routes/reportRoutes');
+const cors = require('cors');
+const path = require('path'); // Add this line
 
-const router = express.Router();
+const app = express();
 
-router.post('/auth', [
-  // username must be an email
-  check('username').isEmail(),
-  // password must be at least 5 chars long
-  check('password').isLength({ min: 5 })
-], authenticate);
+const env = process.env.NODE_ENV || 'development';
+const config = require('./config/config')[env];
 
-// Protect the /fetch-report route with the auth middleware
-router.get('/fetch-report', auth, getReport);
+app.use(cors());
+app.use(express.json());
+app.use(session({
+  secret: 'your secret key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { 
+    secure: env === 'production' ? true : false, 
+    httpOnly: true 
+  }
+}));
 
-module.exports = router;
+app.use(reportRoutes);
 
+// Add these lines to serve your static files
+if (env === 'production') {
+  app.use(express.static(path.join(__dirname, 'build')));
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
+}
+
+app.listen(config.app.port, () => {
+  console.log(`Server running on port ${config.app.port}`);
+});
