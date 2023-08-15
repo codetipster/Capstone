@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Box, AppBar, Toolbar, IconButton, Badge, Drawer, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, InputBase, Divider, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { Box, AppBar, Toolbar, IconButton, Badge, Drawer, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, InputBase, Divider, Typography} from '@mui/material';
 import { Menu as MenuIcon, Mail as MailIcon, Notifications as NotificationsIcon, AccountCircle, Dashboard as DashboardIcon, Search as SearchIcon } from '@mui/icons-material';
 import { alpha } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Grid from '@mui/material/Grid';
+import LoadingOverlay from '../components/LoadingOverlay';
+import styles from '../styles/PublisherCard.module.css';
+
 
 
 
@@ -9,7 +16,8 @@ import { alpha } from '@mui/material/styles';
 const MainPage = () => {
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const [loading, setLoading] = useState(true); // Declare loading state
+  
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -25,14 +33,16 @@ const MainPage = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  
+  const [publishers, setPublishers] = useState([]);
 
-  // Fetch data from backend
-  const [data, setData] = useState([]);
+  
 
   useEffect(() => {
+    //setLoading(true); // Set loading to true when fetch starts
     const token = localStorage.getItem('authToken'); // Replace 'token' with the actual key you used to store your token
-  
-    fetch('http://localhost:5000/fetch-report', {
+  // 'http://localhost:5000/fetch-report'
+    fetch('https://reports.asadcdn.com:5200/getViewablePublishers', {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -46,14 +56,15 @@ const MainPage = () => {
       }
     })
     .then(data => {
-      console.log('Fetched data:', data);
-      setData(data);
+      setPublishers(data);
+      setLoading(false); // Set loading to false when the data is fetched
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => console.error('Error:', error)
+    
+    );
   }, []);
   
  
-  console.log('Data:', data);
 
   const drawer = (
     <div>
@@ -69,10 +80,10 @@ const MainPage = () => {
       </List>
     </div>
   );
-
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: '#141414' }}>
+      <AppBar position="fixed" sx={{ backgroundColor: '#141414' }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -167,36 +178,46 @@ const MainPage = () => {
         sx={{ 
             padding: 3, 
             minHeight: '100vh', 
-            backgroundColor: '#040404' 
+            backgroundColor: '#040404',
+            marginTop: '64px' 
         }}
         >
         <Typography variant="h4" gutterBottom>
             Welcome to the Main Page!
         </Typography>
-        <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Publisher ID</TableCell>
-            <TableCell>Publisher Name</TableCell>
-            <TableCell>Size</TableCell>
-            <TableCell>View Rate</TableCell>
-            <TableCell>View Measurement Rate</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell>{row.publisher_id}</TableCell>
-              <TableCell>{row.publisher_name}</TableCell>
-              <TableCell>{row.size}</TableCell>
-              <TableCell>{row.view_rate}</TableCell>
-              <TableCell>{row.view_measurement_rate}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+
+        {loading ? (
+          // LoadingOverlay component and fetching data text
+          <div>
+            <LoadingOverlay />
+            <Typography variant="h6" gutterBottom>
+              Fetching data, please wait...
+            </Typography>
+          </div>
+        ) : (
+          // Card layout code for each available publisher
+          <Grid container spacing={3}>
+            {publishers.available_publishers.map((publisher) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={publisher.id}>
+              <Link to={`/publishers/${publisher.id}`} className={styles.link} >
+                <Card className={styles.card}>
+                  <CardContent>
+                    <Typography color="textSecondary" gutterBottom>
+                      Publisher Name: {publisher.name}
+                    </Typography>
+                    <Typography color="textPrimary">
+                      Publisher ID: {publisher.id}
+                    </Typography>
+                    <Typography color="textPrimary">
+                      Member ID: {publisher.member_id}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Link>
+              </Grid>
+            ))}
+          </Grid>
+        )}
         </Box>
       </main>
 

@@ -28,7 +28,7 @@ const getReport = (req, res) => {
   const reportRequestData = {
     "report": {
       "report_type": "network_analytics",
-      "columns": ["publisher_name", "day", "size", "imps", "view_rate", "viewdef_view_rate"],
+      "columns": ["publisher_id","publisher_name", "day", "size", "imps", "view_rate", "viewdef_view_rate"],
       "filters": [{"publisher_id": "1000494"}],
       "format": "csv",
       "orders": [{"order_by": "day", "direction": "ASC"}],

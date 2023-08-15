@@ -90,3 +90,5 @@ Contributions to this project are welcome. Please create a fork of the repositor
 ## License
 
 This project is licensed under the MIT License.
+
+## imperative, functional, logic, and object oriented.

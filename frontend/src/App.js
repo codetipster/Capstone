@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate  } from 'react-router-
 import './App.css';
 import Login from './pages/Login';
 import MainPage from './pages/MainPage';  // Replace with your main page component
+import PublisherDetails from './pages/PublisherDetails';  
 import LoadingOverlay from './components/LoadingOverlay';  // If you're using a loading overlay
 //import Navbar from './components/Navbar';  // Ensure this path is correct
 
@@ -53,10 +54,12 @@ function App() {
             <Routes>
               {isAuthenticated ? (
                 <Route path="/" element={<MainPage />} />
+                
               ) : (
                 <Route path="/*" element={<Navigate to="/login" />} />
               )}
               <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+              <Route path="/publishers/:publisherId" element={<PublisherDetails />} />
             </Routes>
           </div>
         </div>
