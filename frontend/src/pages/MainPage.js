@@ -8,10 +8,8 @@ import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
 import LoadingOverlay from '../components/LoadingOverlay';
 import styles from '../styles/PublisherCard.module.css';
-
-
-
-
+import TopAppBar from '../components/TopAppBar';
+import SideDrawer from '../components/SideDrawer';
 
 const MainPage = () => {
   const [open, setOpen] = React.useState(false);
@@ -64,126 +62,29 @@ const MainPage = () => {
     );
   }, []);
   
- 
-
-  const drawer = (
-    <div>
-      <List>
-        {['Dashboard', 'Reports', 'Brands'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon  sx={{ color: '#FFFFFF' }}>
-              {index % 2 === 0 ? <DashboardIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
-  
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" sx={{ backgroundColor: '#141414' }}>
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={handleDrawerOpen}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-            <Typography variant="h6" component="div">
-                AdTech
-            </Typography>
-            <Divider orientation="vertical" flexItem sx={{ height: '25px', m: 'auto 10px' }} />
-            <Box sx={{
-                position: 'relative',
-                borderRadius: '4px',
-                backgroundColor: alpha('#FFFFFF', 0.15),
-                '&:hover': {
-                backgroundColor: alpha('#FFFFFF', 0.25),
-                },
-                marginRight: '2px',
-                marginLeft: 0,
-                width: '100%',
-            }}>
-                <InputBase
-                placeholder="Search by publisher and date"
-                inputProps={{ 'aria-label': 'search' }}
-                sx={{ pl: '10px', color: 'inherit', width: '100%' }}
-                />
-                <Box sx={{ position: 'absolute', right: '5px', top: '50%', transform: 'translateY(-50%)' }}>
-                <SearchIcon />
-                </Box>
-            </Box>
-          </Box>
-
-          <IconButton size="large" color="inherit">
-            <Badge color="error">
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <IconButton size="large" color="inherit">
-            <Badge color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton size="large" color="inherit" onClick={handleMenu}>
-            <Badge color="error">
-              <AccountCircle />
-            </Badge>
-          </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>Settings</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
-          </Menu>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="temporary"
-        anchor="left"
+      <TopAppBar
         open={open}
-        onClose={handleDrawerClose}
-        PaperProps={{
-        sx: {
-        width: 220,
-        backgroundColor: '#141414',  // Set the drawer color
-        color: '#FFFFFF',  // Set the text color
-        },
-      }}
-      >
-        {drawer}
-      </Drawer>
+        handleDrawerOpen={handleDrawerOpen}
+        anchorEl={anchorEl}
+        handleMenu={handleMenu}
+        handleClose={handleClose}
+      />
+      <SideDrawer open={open} handleDrawerClose={handleDrawerClose} />
       <main>
         <Box 
         sx={{ 
-            padding: 3, 
+            padding: 8, 
             minHeight: '100vh', 
             backgroundColor: '#040404',
-            marginTop: '64px' 
+            marginTop: '80px',
+            maxWidth: '2100px',   // You can adjust this value as needed
+            margin: '0 auto'   // This will center the content
         }}
         >
         <Typography variant="h4" gutterBottom>
-            Welcome to the Main Page!
+            Welcome to the Ads Viewability Dashboard
         </Typography>
 
         {loading ? (

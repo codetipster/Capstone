@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
+//import { AppBar} from '@mui/material';
 import { useParams } from 'react-router-dom';
+import TopAppBar from '../components/TopAppBar';
+import SideDrawer from '../components/SideDrawer';
 import {
+  Box,
   Card,
   CardContent,
   Typography,
@@ -22,9 +26,30 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const PublisherDetails = () => {
   const [data, setData] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [openn, setOpenn] = useState(false);
   const [selectedSizes, setSelectedSizes] = useState([]);
   const { publisherId } = useParams();
+
+  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  
+  
 
   useEffect(() => {
     const token = localStorage.getItem('authToken'); 
@@ -46,14 +71,16 @@ const PublisherDetails = () => {
     .catch(error => console.error('Error:', error));
   }, [publisherId]);
 
+
+
   const handleOpen = (sizes) => {
     setSelectedSizes(sizes);
-    setOpen(true);
+    setOpenn(true);
   };
 
-  const handleClose = () => {
+  const handleCloser = () => {
     setSelectedSizes([]);
-    setOpen(false);
+    setOpenn(false);
   };
 
   if (!data) {
@@ -61,7 +88,27 @@ const PublisherDetails = () => {
   }
 
   return (
-    <div style={{ padding: '16px' }}>
+    <Box sx={{ flexGrow: 1 }}>
+      <TopAppBar
+        open={open}
+        handleDrawerOpen={handleDrawerOpen}
+        anchorEl={anchorEl}
+        handleMenu={handleMenu}
+        handleClose={handleClose}
+      />
+      <SideDrawer open={open} handleDrawerClose={handleDrawerClose} />
+
+      <main>
+      <Box
+      sx={{ 
+            padding: 8, 
+            minHeight: '100vh', 
+            backgroundColor: '#040404',
+            marginTop: '80px',
+            maxWidth: '2100px',   // You can adjust this value as needed
+            margin: '0 auto'   // This will center the content
+        }}
+      >
       <Typography variant="h4" gutterBottom>
         Details for Publisher: {data.report[0].publisher_name}
       </Typography>
@@ -92,10 +139,10 @@ const PublisherDetails = () => {
         </div>
       ))}
 
-      <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+      <Dialog open={openn} onClose={handleCloser} maxWidth="md" fullWidth>
         <DialogTitle>
           Sizes and Details
-          <IconButton style={{ position: 'absolute', right: 10, top: 10 }} onClick={handleClose}>
+          <IconButton style={{ position: 'absolute', right: 10, top: 10 }} onClick={handleCloser}>
             <CloseIcon />
           </IconButton>
         </DialogTitle>
@@ -124,7 +171,9 @@ const PublisherDetails = () => {
           </Table>
         </DialogContent>
       </Dialog>
-    </div>
+      </Box>
+      </main>
+    </Box>
   );
 };
 

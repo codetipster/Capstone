@@ -92,3 +92,10 @@ Contributions to this project are welcome. Please create a fork of the repositor
 This project is licensed under the MIT License.
 
 ## imperative, functional, logic, and object oriented.
+
+readability / writability / reliability / efficiency
+
+javascript, pearl and ruby are all imperative programming languages and not functional languages like C, Java, or C++
+In an
+imperative language, an algorithm is specified in great detail, and the specific
+order of execution of the instructions or statements must be included. 
