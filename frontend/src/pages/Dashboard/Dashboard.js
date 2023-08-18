@@ -18,6 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { MainListItems, SecondaryListItems } from './ListItems';
+import { PublisherDetails2 } from '../PublisherDetails2';
 // import Chart from './Chart';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
@@ -82,24 +83,70 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
-  const [selectedOption, setSelectedOption] = React.useState("Dashboard");
+  const [selected, setSelected] = React.useState({
+    option: "Dashboard", 
+    publisherId: null
+  });
+  const [loading, setLoading] = React.useState(true);
+  const [publishers, setPublishers] = React.useState([]);
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
   //what option is selected from side bar?
-  const handleOptionSelected = (option) => {
-    setSelectedOption(option);
-    // Any other logic you want to perform when an option is selected
-    //console.log(option)
+  const handleOptionSelected = ({option, publisherId = null}) => {
+    setSelected({option, publisherId});
     
   };
+  
+
+  React.useEffect(() => {
+    const token = localStorage.getItem('authToken'); 
+    fetch('https://reports.asadcdn.com:5200/getViewablePublishers', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(`Server response was not ok. Status: ${response.status} ${response.statusText}`);
+
+      }
+    })
+    .then(data => {
+      setPublishers(data);
+      setLoading(false); 
+    })
+    .catch(error => console.error('Error:', error)
+    );
+  }, []);
+
+//   Determining what is shown on the main section based on user action
+
+  const renderMainContent = () => {
+    switch (selected.option) {
+        case "Dashboard":
+            // Placeholder for Dashboard Content
+            return <Typography variant="h4">Dashboard Content</Typography>;
+        case "Reports":
+            // Placeholder for Reports Content
+            return <Typography variant="h4">Reports Content</Typography>;
+        case "Current month":
+            // Placeholder for Current Month Content
+            return <Typography variant="h4">Current Month Content</Typography>;
+        // ... add other cases as per your options return <PublisherDetails2 publisherId={selectedOption} />;
+        default:
+            return <PublisherDetails2 publisherId={selected.publisherId} />
+    }
+};
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -139,6 +186,7 @@ export default function Dashboard() {
             </IconButton>
           </Toolbar>
         </AppBar>
+
         <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
@@ -155,11 +203,12 @@ export default function Dashboard() {
           <Divider />
           {/* side bar column options */}
           <List component="nav">
-          <MainListItems onOptionSelected={handleOptionSelected} selectedOption={selectedOption}/> 
+          <MainListItems onOptionSelected={handleOptionSelected} selectedOption={selected.option} /> 
             <Divider sx={{ my: 1 }} />
-          <SecondaryListItems onOptionSelected={handleOptionSelected} selectedOption={selectedOption}/>
+          <SecondaryListItems onOptionSelected={handleOptionSelected} selectedOption={selected.option} publishers={publishers}/>
           </List>
         </Drawer>
+        
         <Box
           component="main"
           sx={{
@@ -173,9 +222,9 @@ export default function Dashboard() {
           }}
         >
           <Toolbar />
-
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
+        
+          {/* <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}> */}
               {/* Chart */}
               {/* <Grid item xs={12} md={8} lg={9}>
                 <Paper
@@ -210,9 +259,20 @@ export default function Dashboard() {
                   <Orders />
                 </Paper>
               </Grid> */}
+            {/* </Grid>
+
+
+
+            <Copyright sx={{ pt: 4 }} />
+          </Container> */}
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}>
+                <Grid item xs={12}>
+                    {renderMainContent()}
+                </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
-          </Container>
+         </Container>
 
         </Box>
       </Box>

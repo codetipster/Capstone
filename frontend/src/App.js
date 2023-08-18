@@ -56,14 +56,13 @@ function App() {
           <div className="content">
             <Routes>
               {isAuthenticated ? (
-                <Route path="/" element={<MainPage />} />
+                <Route path="/" element={<Dashboard />} />
                 
               ) : (
                 <Route path="/*" element={<Navigate to="/login" />} />
               )}
               <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
               <Route path="/publishers/:publisherId" element={<PublisherDetails />} />
-              <Route path='/dashboard' element={<Dashboard />} />
             </Routes>
           </div>
         </div>
