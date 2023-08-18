@@ -7,6 +7,9 @@ import Login from './pages/Login';
 import MainPage from './pages/MainPage';  // Replace with your main page component
 import PublisherDetails from './pages/PublisherDetails';  
 import LoadingOverlay from './components/LoadingOverlay';  // If you're using a loading overlay
+import Dashboard from './pages/Dashboard/Dashboard';
+//import Dashboard from './pages/Test';
+
 //import Navbar from './components/Navbar';  // Ensure this path is correct
 
 async function fakeAuthCheck() {
@@ -60,6 +63,7 @@ function App() {
               )}
               <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
               <Route path="/publishers/:publisherId" element={<PublisherDetails />} />
+              <Route path='/dashboard' element={<Dashboard />} />
             </Routes>
           </div>
         </div>
