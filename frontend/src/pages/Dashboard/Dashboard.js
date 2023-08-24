@@ -12,16 +12,16 @@ import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-//import Paper from '@mui/material/Paper';
-//import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { MainListItems, SecondaryListItems } from './ListItems';
 import { PublisherDetails2 } from '../PublisherDetails2';
-// import Chart from './Chart';
-// import Deposits from './Deposits';
-// import Orders from './Orders';
+ import Chart from './Chart';
+ import Deposits from './Deposits';
+ import Orders from './Orders';
 
 function Copyright(props) {
   return (
@@ -113,6 +113,7 @@ export default function Dashboard() {
       }
     })
     .then(response => {
+      console.log('response', response)
       if (response.ok) {
         return response.json();
       } else {
@@ -121,6 +122,7 @@ export default function Dashboard() {
       }
     })
     .then(data => {
+      console.log('data',data);
       setPublishers(data);
       setLoading(false); 
     })
@@ -152,7 +154,7 @@ export default function Dashboard() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar position="absolute" open={open} >
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -173,13 +175,13 @@ export default function Dashboard() {
             <Typography
               component="h1"
               variant="h6"
-              color="inherit"
+              sx={{color:'#0000FF', fontWeight: 'bold' }}
               noWrap
-              sx={{ flexGrow: 1 }}
             >
               Ads Viewability Dashboard
             </Typography>
-            <IconButton color="inherit">
+            <Box sx={{ flexGrow: 1 }} /> {/* This acts as a spacer between the title and the icons */}
+            <IconButton >
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
@@ -223,49 +225,9 @@ export default function Dashboard() {
         >
           <Toolbar />
         
-          {/* <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}> */}
-              {/* Chart */}
-              {/* <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid> */}
+          
 
-              {/* Recent Deposits */}
-              {/* <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Deposits />
-                </Paper>
-              </Grid> */}
-
-              {/* Recent Orders */}
-              {/* <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
-                </Paper>
-              </Grid> */}
-            {/* </Grid>
-
-
-
-            <Copyright sx={{ pt: 4 }} />
-          </Container> */}
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     {renderMainContent()}
