@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import Slider from "react-slick";
+import Chart from '../pages/Dashboard/Chart'
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 import { useParams } from 'react-router-dom';
 import {
   Box,
@@ -32,6 +36,7 @@ export function PublisherDetails2({ publisherId }) {
     const desktop =  ['superbanner', 'Superbanner_btf', 'Superbanner_sticky', 'Superbanner_btf_sticky', 'mrec', 'Mrec_btf', 'Mrec_sticky', 'Mrec_btf_sticky', 'billboard', 'Billboard_btf', 'Billboard_sticky', 'Billboard_btf_sticky', 'Inpage', 'Inread', 'Inread_btf', 'Inread_sticky', 'Inread_btf_sticky', 'sky', 'sky_btf']
     
 
+
     React.useEffect(() => {
       const token = localStorage.getItem('authToken'); 
       fetch(`https://reports.asadcdn.com:5200/getViewabilityReport?publisher_id=${publisherId}&date_range=last7days`, {
@@ -60,14 +65,23 @@ export function PublisherDetails2({ publisherId }) {
     useEffect(() => {
       if (selectedAdSlot !== null) {
         const selectedDetails = data.report[7]?.adslots.find(adslot => adslot.slot === selectedAdSlot);
+        
         setSelectedAdSlotDetails(selectedDetails);
       }
     }, [selectedAdSlot, data]);
 
-    
+     //slider settings
+    const sliderSettings = {
+      dots: true,
+      infinite: false,
+      speed: 600,
+      slidesToShow: 3,
+      slidesToScroll: 3,
+      autoplay: true,
+      autoplaySpeed: 1000,
+    };
+    //console.log('selectedAdSlotDetails', selectedAdSlotDetails.sizes[0].impression_type)
     console.log('publisherDetails2', data)
-    
-
     return (
       <Container maxWidth="xl" >
         {data ? (
@@ -191,32 +205,50 @@ export function PublisherDetails2({ publisherId }) {
                         </Grid>
 
                         {/* sliding components */}
-                        <Grid item xs={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <Card variant="outlined" sx={{ padding: 1 }}>
-                                      <CardContent>
-                                        <Typography variant="h4" component="div" sx={{ fontWeight: 'bold' }}>
-                                          {selectedAdSlotDetails ? `${(selectedAdSlotDetails.average_custom_view_rate * 100).toFixed(2)}%` : 'No Data'}
-                                        </Typography>
-                                        <Typography variant="body2" component="div">
-                                          Custom Viewability
-                                        </Typography>
-                                        <Typography variant="body2" component="div" sx={{ color: '#1324F2'}}>
-                                          Today
-                                        </Typography>
-                                        <Divider sx={{ backgroundColor: '#00FFFF', height: '5px', marginTop: '22px' }} />
-                                      </CardContent>
-                            </Card>
+                        <Grid item xs={6} sx={{ width:'90%', display: 'flex', flexDirection: 'column', alignItems: 'center', maxHeight:  '100%' }}>
+                            <Box style={{ width: '70%', maxHeight: '80%' }}>
+                              {selectedAdSlotDetails && selectedAdSlotDetails.sizes ? (
+                                <Slider {...sliderSettings}>
+                                  {selectedAdSlotDetails.sizes.map((size, index) => (
+                                    <div key={index}>
+                                      <Card >
+                                        <CardContent sx={{ paddingLeft: 1, paddingRight: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                          <Typography variant="p" sx={{ fontSize: '12px' }}>Viewability rate</Typography>
+                                          <Typography variant="h7" component="div" sx={{ fontWeight: 'bold' }}>
+                                          {size.view_rate ? `${(size.view_rate * 100).toFixed(2)}%` : '0%'}
+                                          </Typography>
+                                          <Typography variant="body2" component="p">
+                                            {size.impression_type}
+                                          </Typography>
+                                          <Typography variant="body2" component="p" sx={{ color: '#1324F2'}}>
+                                            {size.size}
+                                          </Typography>
+                                          <Typography variant="p" sx={{ fontSize: '12px' }}>Custom View</Typography>
+                                          <Typography variant="h7" component="div" sx={{ fontWeight: 'bold' }}>
+                                          {size.custom_view_rate ? `${(size.custom_view_rate * 100).toFixed(2)}%` : '0%'}
+                                          </Typography>
+      
+                                        </CardContent>
+                                      </Card>
+                                    </div>
+                                  ))}
+                                </Slider>
+                              ) : (
+                                <p>No Data for Slider</p>
+                              )}
+                            </Box>
                         </Grid>
-                      </Grid> 
-                      
+
+                        
+                      </Grid>     
                     </Box>
               </Grid>
           </Grid>
           
-
         ) : (
           <p>Loading...</p>
         )}
+        
       </Container>
     );
   }

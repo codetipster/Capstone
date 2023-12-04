@@ -19,9 +19,10 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { MainListItems, SecondaryListItems } from './ListItems';
 import { PublisherDetails2 } from '../PublisherDetails2';
- import Chart from './Chart';
+ //import Chart from './Chart';
  import Deposits from './Deposits';
  import Orders from './Orders';
+ import SampleGrid from '../../components/SampleGrid';
 
 function Copyright(props) {
   return (
@@ -228,6 +229,7 @@ export default function Dashboard() {
           
 
           <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+             
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     {renderMainContent()}

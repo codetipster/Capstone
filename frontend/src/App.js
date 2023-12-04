@@ -1,16 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Route, Routes, Navigate  } from 'react-router-dom';
-import './App.css';
 import Login from './pages/Login';
-import MainPage from './pages/MainPage';  // Replace with your main page component
-import PublisherDetails from './pages/PublisherDetails';  
+//import PublisherDetails from './pages/PublisherDetails';  
 import LoadingOverlay from './components/LoadingOverlay';  // If you're using a loading overlay
-import Dashboard from './pages/Dashboard/Dashboard';
-//import Dashboard from './pages/Test';
+//import Dashboard from './pages/Dashboard/Dashboard';
+//import Dashboard from "./scenes/dashboard";
+// import Team from "./scenes/team";
+// import Invoices from "./scenes/invoices";
+// import Contacts from "./scenes/contacts";
+// import Bar from "./scenes/bar";
+// import Form from "./scenes/form";
+// import Line from "./scenes/line";
+// import Pie from "./scenes/pie";
+// import FAQ from "./scenes/faq";
+// import Geography from "./scenes/geography";
+// import { ColorModeContext, useMode } from './theme';
+// import { CssBaseline, ThemeProvider } from '@mui/material';
+// import Topbar from './scenes/global/Topbar';
+// import Sidebarr from './scenes/global/Sidebarr';
+import Sidenav from './components/Sidenav';
+import Settings from './pages/Settings';
+import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 
-//import Navbar from './components/Navbar';  // Ensure this path is correct
+
 
 async function fakeAuthCheck() {
   // Return a promise that resolves after a delay
@@ -20,54 +34,69 @@ async function fakeAuthCheck() {
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [theme, colorMode] = useMode();
 
-  useEffect(() => {
-    const checkAuthentication = async () => {
-      const sessionIsValid = await fakeAuthCheck();
-      setIsAuthenticated(sessionIsValid);
-      setIsLoading(false);
-    };
+  // useEffect(() => {
+  //   const checkAuthentication = async () => {
+  //     const sessionIsValid = await fakeAuthCheck();
+  //     setIsAuthenticated(sessionIsValid);
+  //     setIsLoading(false);
+  //   };
 
-    checkAuthentication();
-  }, []);
+  //   checkAuthentication();
+  // }, []);
 
-  if (isLoading) {
-    return <LoadingOverlay />;
-  }
+  // if (isLoading) {
+  //   return <LoadingOverlay />;
+  // }
 
   return (
-    <div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggablePercent={60}
-        style={{ fontSize: "1.5rem" }} // Custom style here
-      />
-      <Router>
-        <div className="App">
-          
-          <div className="content">
-            <Routes>
-              {isAuthenticated ? (
-                <Route path="/" element={<Dashboard />} />
-                
-              ) : (
-                <Route path="/*" element={<Navigate to="/login" />} />
-              )}
-              <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-              <Route path="/publishers/:publisherId" element={<PublisherDetails />} />
-            </Routes>
-          </div>
-        </div>
-      </Router>
-    </div>
+    // <ColorModeContext.Provider value={colorMode}>
+    // <ThemeProvider theme={theme}>
+    // <CssBaseline />
+    // <div className='app'>
+    // <Router>
+    //   <Sidebarr />
+    //  <main className='content'>
+    //   <Topbar />
+
+      
+    //     <Routes>
+    //       {isAuthenticated ? (
+    //         <Route path="/" element={<Dashboard />} />      
+    //         ) : (
+    //         <Route path="/*" element={<Navigate to="/login" />} />
+    //       )}
+    //       <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+    //           -  {/* <Route path="/team" element={<Team />} /> */}
+    //           -  {/* <Route path="/contacts" element={<Contacts />} /> */}
+    //            - {/* <Route path="/invoices" element={<Invoices />} /> */}
+    //           -  {/* <Route path="/form" element={<Form />} /> */}
+    //           -  {/* <Route path="/bar" element={<Bar />} /> */}
+    //           -  {/* <Route path="/pie" element={<Pie />} /> */}
+    //           -  {/* <Route path="/line" element={<Line />} /> */}
+    //            - {/* <Route path="/faq" element={<FAQ />} /> */}
+    //           -  {/* <Route path="/calendar" element={<Calendar />} /> */}
+    //           -  {/* <Route path="/geography" element={<Geography />} /> */}
+    //     </Routes>
+     
+    //  </main>
+    //  </Router>
+    // </div>  
+    // </ThemeProvider>
+    // </ColorModeContext.Provider>
+    <>
+     <Router>
+       <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/settings" element={<Settings/>} />
+       </Routes>
+     </Router>
+      
+    </>
   );
 }
 
