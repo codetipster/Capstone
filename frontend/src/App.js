@@ -19,10 +19,11 @@ import LoadingOverlay from './components/LoadingOverlay';  // If you're using a 
 // import { CssBaseline, ThemeProvider } from '@mui/material';
 // import Topbar from './scenes/global/Topbar';
 // import Sidebarr from './scenes/global/Sidebarr';
-import Sidenav from './components/Sidenav';
+//import Sidenav from './components/Sidenav';
 import Settings from './pages/Settings';
 import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
+import Analytics from './pages/Analytics';
+import DataProvider from './providers/DataProvider';
 
 
 
@@ -34,23 +35,23 @@ async function fakeAuthCheck() {
 }
 
 function App() {
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+   const [isLoading, setIsLoading] = useState(true);
+   const [isAuthenticated, setIsAuthenticated] = useState(false);
   // const [theme, colorMode] = useMode();
 
-  // useEffect(() => {
-  //   const checkAuthentication = async () => {
-  //     const sessionIsValid = await fakeAuthCheck();
-  //     setIsAuthenticated(sessionIsValid);
-  //     setIsLoading(false);
-  //   };
+   useEffect(() => {
+     const checkAuthentication = async () => {
+       const sessionIsValid = await fakeAuthCheck();
+       setIsAuthenticated(sessionIsValid);
+       setIsLoading(false);
+     };
 
-  //   checkAuthentication();
-  // }, []);
+     checkAuthentication();
+   }, []);
 
-  // if (isLoading) {
-  //   return <LoadingOverlay />;
-  // }
+   if (isLoading) {
+     return <LoadingOverlay />;
+   }
 
   return (
     // <ColorModeContext.Provider value={colorMode}>
@@ -88,14 +89,20 @@ function App() {
     // </ThemeProvider>
     // </ColorModeContext.Provider>
     <>
+    <DataProvider>
      <Router>
        <Routes>
-          <Route path="/" exact element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+       {isAuthenticated ? (
+        <Route path="/" exact element={<Home />} />
+       ):(
+        <Route path="/*" element={<Navigate to="/login" />} />
+       )}
+          <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/analytics" element={<Analytics />} />
           <Route path="/settings" element={<Settings/>} />
        </Routes>
      </Router>
-      
+   </DataProvider>  
     </>
   );
 }

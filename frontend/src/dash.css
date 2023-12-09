@@ -1,0 +1,41 @@
+.totalCard{
+  padding: 10px 10px 10px 10px;
+  ;
+}
+.totalValue{
+  font-weight: 600;
+}
+.totalValue1{
+  font-weight: 600;
+  color: #ffffff;
+}
+.totalTitle{
+  font-size: 14px;
+}
+.totalTitle1{
+  font-size: 14px;
+  color: #ffffff;
+}
+.iconStyle{
+  padding-top: 20px;
+  padding-left: 20px;
+  color: aliceblue;
+}
+.iconStyleblack{
+  padding-top: 20px;
+  padding-left: 20px;
+}
+.gradient{
+  background: rgb(57, 2, 248);
+  background: linear-gradient(158deg, rgba(57, 2, 248) 0%, rgba(30, 47, 141, 1) 100%);
+}
+.gradientLight{
+  background: rgb(53, 138, 148);
+  background: linear-gradient(158deg, rgba(53, 138, 148, 1) 0%, rgba(91, 180, 96, 1) 100%);
+}
+
+.bgcolor{
+  min-height: 100vh;
+  background: #eceff1;
+  background: linear-gradient(158deg, rgba(224, 224, 224) 0%, rgba(233, 237, 254) 100%);
+}
