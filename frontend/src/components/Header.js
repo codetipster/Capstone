@@ -1,8 +1,6 @@
 import {
     AppBar,
     Container,
-    MenuItem,
-    Select,
     Toolbar,
     Typography,
   } from "@material-ui/core";
@@ -11,9 +9,9 @@ import {
     makeStyles,
     ThemeProvider,
   } from "@material-ui/core/styles";
-  //import { useHistory } from "react-router-dom";
+  
   import { useNavigate } from "react-router-dom";
-  import { CryptoState } from "../CryptoContext";
+  
   
   const useStyles = makeStyles((theme) => ({
     title: {
@@ -36,9 +34,6 @@ import {
   
   function Header() {
     const classes = useStyles();
-    //const { currency, setCurrency } = CryptoState();
-  
-    //const history = useHistory();
     const navigate = useNavigate();
   
     return (

@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 import AliceCarousel from "react-alice-carousel";
 import { Link } from "react-router-dom";
 import { TrendingCoins } from "../../config/api";
-import { CryptoState } from "../../CryptoContext";
+import { CryptoState } from "../../PublisherContext";
 import { numberWithCommas } from "../PublishersTable";
 import image from '../../assets/aaa.jpeg';
 
