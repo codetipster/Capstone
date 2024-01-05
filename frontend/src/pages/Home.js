@@ -27,7 +27,7 @@ import PreviewIcon from '@mui/icons-material/Preview';
 
 const Home = () => {
     const { selectedPublisher } = usePublisher();
-    // console.log('selectedPublisher from HOME', selectedPublisher)
+     console.log('selectedPublisher from HOME', selectedPublisher)
   const { publishers } = useContext(DataContext);
   const [publisherData, setPublisherData] = useState({});
   const [averageRates, setAverageRates] = useState({});
@@ -96,6 +96,9 @@ const Home = () => {
 
   console.log('combinedData homepage HOME', combinedData);
 
+  const data4cards = selectedPublisher?.data?.report[6];
+  console.log('data4cards from HOME', data4cards)
+
   return (
     <>
       <div className="bgcolor">
@@ -119,7 +122,7 @@ const Home = () => {
                     }}
                   >
                     <Stack spacing={2} direction="row">
-                      <Card sx={{ minWidth: 49.5 + "%", height: 150 }} className='gradient'>
+                      <Card sx={{ minWidth: 49.5 + "%", height: 175 }} className='gradient'>
                                             <CardContent>
                                                 <div className='iconStyle'>
                                                 <AdsClickIcon/>
@@ -128,11 +131,14 @@ const Home = () => {
                                                 81.62%
                                                 </Typography>
                                                 <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1"}}>
-                                                Viewability rate
+                                                Viewability rate for Yesterday
+                                                </Typography>
+                                                <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1"}}>
+                                                {data4cards?.publisher_name}
                                                 </Typography>
                                             </CardContent>
                                         </Card>
-                                        <Card sx={{ minWidth: 49.5 + "%", height: 150 }} className='gradientLight'>
+                                        <Card sx={{ minWidth: 49.5 + "%", height: 175 }} className='gradientLight'>
                                             <CardContent>
                                                 <div className='iconStyle'>
                                                 <AdsClickIcon/>
@@ -155,7 +161,7 @@ const Home = () => {
                     }}
                   >
                     <Stack spacing={2} direction="row">
-                      <Card sx={{ minWidth: 49.5 + "%", height: 150 }} className='gradient'>
+                      <Card sx={{ minWidth: 49.5 + "%", height: 175 }} className='gradient'>
                                             <CardContent>
                                                 <div className='iconStyle'>
                                                 <PreviewIcon/>
@@ -168,7 +174,7 @@ const Home = () => {
                                                 </Typography>
                                             </CardContent>
                                         </Card>
-                      <Card sx={{ minWidth: 49.5 + "%", height: 150 }}  className='gradientLight'>
+                      <Card sx={{ minWidth: 49.5 + "%", height: 175 }}  className='gradientLight'>
                                             <CardContent>
                                                 <div className='iconStyle'>
                                                 <PreviewIcon/>
