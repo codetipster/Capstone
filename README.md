@@ -53,7 +53,7 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2024 [Samuel Nzekwe](https://github.com/codetipster).<br />
+Copyright © 2024 AxelSpringer <br />
 This project is [ISC](https://github.com/codetipster/xandr-report-tool/blob/master/LICENSE) licensed.
 
 ***
