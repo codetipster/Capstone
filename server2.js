@@ -60,10 +60,6 @@ anxApi.login(username, password).then((token) => {
             
           };
           
-          
-        
-        
-        
 
         anxApi.post('report', reportRequestData)
             .then(reportResponse => {

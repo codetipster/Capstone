@@ -1,101 +1,60 @@
-# xandr-report-tool
+<h1 align="center">Welcome to Ads Viewability Dashboard 👋</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <a href="https://docs.google.com/document/d/1NURr-SyYC_FIC7IXj2VUmuzDkGaFzf4BgmdJ6-sbEuE/edit" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+  <a href="https://github.com/codetipster/xandr-report-tool/graphs/commit-activity" target="_blank">
+    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+  </a>
+  <a href="https://github.com/codetipster/xandr-report-tool/blob/master/LICENSE" target="_blank">
+    <img alt="License: ISC" src="https://img.shields.io/github/license/codetipster/Ads Viewability Dashboard" />
+  </a>
+</p>
 
-This repository contains a Node.js application designed to interact with the Xandr API. The tool fetches and displays viewability reports for specified publishers and ad slots. It's built for internal use to aid in analyzing ad performance data and is expected to evolve over time as we understand more about our reporting needs. This project is part of an ongoing effort to automate and enhance our advertising analytics capabilities...
+> This repository contains a Node.js application designed to interact with the Xandr API. The tool fetches and displays viewability reports for specified publishers and ad slots. It's built for internal use to aid in analyzing ad performance data and is expected to evolve over time as we understand more about our reporting needs. This project is part of an ongoing effort to automate and enhance our advertising analytics capabilities.
 
-## CI / CD
+### 🏠 [Homepage](https://github.com/codetipster/xandr-report-tool#readme)
 
-### Pipeline Sketch
-+-------------+     +-------------+    +-------------+    +-------------+
-|             |     |             |    |             |    |             |
-| Local Dev   +----->  GitHub     +---->   CI Server +---->  CD Server |
-|             |     |             |    |             |    |             |
-+-------------+     +-------------+    +-------------+    +-------------+
-       |                   |                  |                  |
-       |                   |                  |                  |
-  Code/Debug         Version Control   Build/Tests         Deployment
+### ✨ [Demo](https://google.com/me)
 
+## Install
 
+```sh
+npm install
+```
 
-* Local Development: This stage initiates on your personal computer, where you create and initially test your code.
-* GitHub (Version Control System): Following the successful local development and testing, your code is then committed and pushed to GitHub, which serves as our version control system. In addition to the code, associated materials such as documentation, images, or configuration files that exist in your repository also get transferred to GitHub.
-* Continuous Integration (CI) Server: Each time a new commit is made to GitHub, it triggers our CI server. This server automatically fetches the most recent code along with any associated materials. The CI server then executes a series of automated tests on this code.
-* Continuous Deployment (CD) Server: Upon the successful build of the project and passing of all tests by the CI server, the CD server steps in. It retrieves the code and any needed materials either directly from GitHub or the CI server. The code then gets deployed to a staging environment for further testing, and upon successful validation, it's deployed to the production environment.
+## Usage
 
-## Prerequisites
+```sh
+npm run start
+```
 
-Node.js & npm
-A Xandr account with API access
-Environment Configuration
+## Run tests
 
-In order to run this application, you need to set up the following environment variables in the config file:
+```sh
+npm run test
+```
 
-XANDR_API_URL: This is the URL for the Xandr API. Typically, it is https://api.appnexus.com/.
-XANDR_USERNAME: The username for your Xandr account.
-XANDR_PASSWORD: The password for your Xandr account.
+## Author
 
-The config file is structured as follows:
+👤 **Samuel Nzekwe**
 
-`module.exports = {
-  development: {
-    xandr: {
-      apiUrl: process.env.XANDR_API_URL,
-      username: process.env.XANDR_USERNAME,
-      password: process.env.XANDR_PASSWORD
-    }
-  }
-  //...
-}
-`
-To run the project in different environments (like development, production, etc.), create similar blocks and use the NODE_ENV variable to switch between them.
+* Github: [@codetipster](https://github.com/codetipster)
+* LinkedIn: [@https:\/\/www.linkedin.com\/in\/samuel-nzekwe-50b899195\/](https://linkedin.com/in/https:\/\/www.linkedin.com\/in\/samuel-nzekwe-50b899195\/)
 
-## Running the Project
+## 🤝 Contributing
 
-To run the project, follow these steps:
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/codetipster/xandr-report-tool/issues). You can also take a look at the [contributing guide](https://github.com/codetipster/xandr-report-tool/blob/master/CONTRIBUTING.md).
 
-Clone the repository.
-Install the dependencies:
+## Show your support
 
-`npm install
-`
-Set your environment variables. This can typically be done in a .env file or directly in your shell.
-Run the project:
+Give a ⭐️ if this project helped you!
 
-`npm start
-`
-This will start the application. By default, it will be accessible at http://localhost:3000 (or the port specified in your environment configuration).
+## 📝 License
 
-## Project Structure
+Copyright © 2024 [Samuel Nzekwe](https://github.com/codetipster).<br />
+This project is [ISC](https://github.com/codetipster/xandr-report-tool/blob/master/LICENSE) licensed.
 
-The main components of this application are the authenticate and getReport functions, which authenticate the user with the Xandr API and fetch the requested report data, respectively.
-
-This application makes use of several libraries:
-
-axios is used for making HTTP requests.
-anx-api is a helper library for interacting with the Xandr API.
-csvtojson is used to convert CSV data retrieved from the API into JSON for easier manipulation.
-
-## Troubleshooting
-
-If you're encountering a TypeError: Failed to fetch error, please check the following:
-
-Is your CORS policy properly configured on the server?
-Is the URL you're fetching from correct and accessible?
-Are there any network connectivity issues?
-Ensure your environment variables are correctly set and that the server is up and running.
-
-## Contributions
-
-Contributions to this project are welcome. Please create a fork of the repository, make your changes, and submit a pull request.
-
-## License
-
-This project is licensed under the MIT License.
-
-## imperative, functional, logic, and object oriented.
-
-readability / writability / reliability / efficiency
-
-javascript, pearl and ruby are all imperative programming languages and not functional languages like C, Java, or C++
-In an
-imperative language, an algorithm is specified in great detail, and the specific
-order of execution of the instructions or statements must be included. 
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
