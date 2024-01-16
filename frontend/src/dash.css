@@ -17,9 +17,10 @@
   color: #ffffff;
 }
 .iconStyle{
-  padding-top: 5px;
-  padding-left: 5px;
+  padding-top: 2px;
+  padding-left: 2px;
   color: aliceblue;
+  
 }
 .iconStyleblack{
   padding-top: 5px;
@@ -38,4 +39,9 @@
   min-height: 100vh;
   background: #eceff1;
   background: linear-gradient(158deg, rgba(224, 224, 224) 0%, rgba(233, 237, 254) 100%);
+}
+
+.label {
+  font-size:x-small
+  
 }

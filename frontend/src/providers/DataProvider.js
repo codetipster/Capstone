@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // DataProvider.js
 import React, { useState, useEffect } from 'react';
 import DataContext from '../contexts/DataContext';

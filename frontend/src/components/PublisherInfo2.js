@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 
 import React, { useState, useRef, useEffect } from 'react';
 import 'chartjs-adapter-moment';  // Add this import statement
 import moment from 'moment';  
-import { LinearProgress, makeStyles, CircularProgress, Typography } from "@material-ui/core";
+import { makeStyles, CircularProgress } from "@material-ui/core";
 import {  Line } from "react-chartjs-2";
 import Chart from 'chart.js/auto';
 import { usePublisher } from '../PublisherContext';

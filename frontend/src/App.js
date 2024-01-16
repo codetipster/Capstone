@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from "@material-ui/core";
-import Homepage from "./pages/Homepage";
 import Home from "./pages/Home";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes, Navigate  } from 'react-router-dom';

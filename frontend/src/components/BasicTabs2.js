@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+//import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -8,7 +9,7 @@ import Box from '@mui/material/Box';
 //import Datepicker from './Datepicker';
 
 //import { usePublisher } from '../PublisherContext';
-import PublishersTable from './PublishersTable';
+//import PublishersTable from './PublishersTable';
 import PublishersTable2 from './PublishersTable2';
 
 
@@ -57,15 +58,6 @@ export default function BasicTabs({sizesData}) {
 
   console.log('sizesData from basicTabs',sizesData)
 
-  const tabPanelStyles = {
-    width: '75%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 25,
-    padding: 40,
-  };
 
 
 

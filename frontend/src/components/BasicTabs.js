@@ -48,15 +48,7 @@ export default function BasicTabs() {
     setValue(newValue);
   };
 
-  const tabPanelStyles = {
-    width: '75%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 25,
-    padding: 40,
-  };
+
 
   return (
     <Box sx={{ width: '100%' }}>

@@ -4,12 +4,10 @@ import Sidenav from "../components/Sidenav";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Navbar from "../components/Navbar";
-import AccordionDash from "../components/AccordionDash";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
-import ApprovalIcon from "@mui/icons-material/Approval";
 import "../dash.css";
 import DataContext from "../contexts/DataContext";
 import BasicTabs from "../components/BasicTabs";
@@ -26,7 +24,7 @@ import PreviewIcon from '@mui/icons-material/Preview';
 
 
 const Home = () => {
-    const { selectedPublisher } = usePublisher();
+  const { selectedPublisher } = usePublisher();
      console.log('selectedPublisher from HOME', selectedPublisher)
   const { publishers } = useContext(DataContext);
   const [publisherData, setPublisherData] = useState({});
@@ -36,8 +34,6 @@ const Home = () => {
   const [sizesData, setSizesData] = useState([]);
   const SelectedDateData = selectedPublisher?.data?.report;
 
-//   console.log('SelectedDateData from home', SelectedDateData)
-//   console.log('sizesData from home', sizesData)
 
   useEffect(() => {
     const fetchDataForPublishers = async () => {
@@ -84,7 +80,7 @@ const Home = () => {
   }, [publishers]);
 
  
-  const combinedData = publishers.available_publishers.map(publisher => {
+  const combinedData = (publishers.available_publishers || []).map(publisher => {
     return {
       ...publisher, 
       data: publisherData[publisher.id], 
@@ -98,6 +94,22 @@ const Home = () => {
 
   const data4cards = selectedPublisher?.data?.report[6];
   console.log('data4cards from HOME', data4cards)
+  
+  const yesterdayAdslotAverages = {}
+  if (data4cards){
+    data4cards.adslots.forEach(adslot => {
+      yesterdayAdslotAverages[adslot.slot] = {
+        averageViewRate: adslot.average_view_rate,
+        averageCustomViewRate: adslot.average_custom_view_rate
+      };
+      });
+  }
+  if (yesterdayAdslotAverages['banner']) {
+    console.log('yesterdayAdslotAverages from HOME', yesterdayAdslotAverages['banner'].averageViewRate);
+  } else {
+    console.log('yesterdayAdslotAverages from HOME: banner adslot not found');
+  }
+  
 
   return (
     <>
@@ -124,30 +136,54 @@ const Home = () => {
                     <Stack spacing={2} direction="row">
                       <Card sx={{ minWidth: 49.5 + "%", height: 175 }} className='gradient'>
                                             <CardContent>
-                                                <div className='iconStyle'>
-                                                <AdsClickIcon/>
-                                                </div>
-                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
-                                                81.62%
-                                                </Typography>
-                                                <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1"}}>
-                                                Viewability rate for Yesterday
-                                                </Typography>
-                                                <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1"}}>
+                                               <div >
+                                               <Typography gutterBottom variant="body2" component="div" sx={{color:"#ee14bb", fontSize:"15px"}}>
                                                 {data4cards?.publisher_name}
                                                 </Typography>
+    
+                                                <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1", fontSize:"15px"}}>
+                                                <span>Banner</span> | <span>Yesterday</span>
+                                                </Typography>
+                                               </div>
+
+                                                
+                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
+                                                {Number(parseFloat(yesterdayAdslotAverages['banner']?.averageViewRate)*100).toFixed(2)}%
+                                                <span className="label">view rate</span>
+                                                </Typography>
+                                              
+                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
+                                                {Number(parseFloat(yesterdayAdslotAverages['banner']?.averageCustomViewRate)*100).toFixed(2)}%
+                                                <span className="label">custom rate</span>
+                                                </Typography>
+                                               
+                                                
+                                                
+                                                
                                             </CardContent>
                                         </Card>
+
                                         <Card sx={{ minWidth: 49.5 + "%", height: 175 }} className='gradientLight'>
                                             <CardContent>
-                                                <div className='iconStyle'>
-                                                <AdsClickIcon/>
-                                                </div>
-                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
-                                                81.62%
+                                              <div >
+                                               <Typography gutterBottom variant="body2" component="div" sx={{color:"#ee14bb", fontSize:"15px"}}>
+                                                {data4cards?.publisher_name}
                                                 </Typography>
-                                                <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1"}}>
-                                                Viewability rate
+    
+                                                <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1", fontSize:"15px"}}>
+                                                <span>Super banner</span> | <span>Yesterday</span>
+                                                </Typography>
+                                               </div>
+
+                                                
+                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
+                                                {Number(parseFloat(yesterdayAdslotAverages['superbanner']?.averageViewRate)*100).toFixed(2)}%
+                                                <span className="label">view rate</span>
+                                                </Typography>
+                                              
+                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
+                                                {Number(parseFloat(yesterdayAdslotAverages['superbanner']?.averageCustomViewRate)*100).toFixed(2)}%
+                                                <span className="label">custom rate</span>
                                                 </Typography>
                                             </CardContent>
                                         </Card>
@@ -162,28 +198,50 @@ const Home = () => {
                   >
                     <Stack spacing={2} direction="row">
                       <Card sx={{ minWidth: 49.5 + "%", height: 175 }} className='gradient'>
-                                            <CardContent>
-                                                <div className='iconStyle'>
-                                                <PreviewIcon/>
-                                                </div>
-                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
-                                                81.62%
+                      <CardContent>
+                                              <div >
+                                               <Typography gutterBottom variant="body2" component="div" sx={{color:"#ee14bb", fontSize:"15px"}}>
+                                                {data4cards?.publisher_name}
                                                 </Typography>
-                                                <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1"}}>
-                                                Viewability rate
+    
+                                                <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1", fontSize:"15px"}}>
+                                                <span>Sky</span> | <span>Yesterday</span>
+                                                </Typography>
+                                               </div>
+
+                                                
+                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
+                                                {Number(parseFloat(yesterdayAdslotAverages['sky']?.averageViewRate)*100).toFixed(2)}%
+                                                <span className="label">view rate</span>
+                                                </Typography>
+                                              
+                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
+                                                {Number(parseFloat(yesterdayAdslotAverages['sky']?.averageCustomViewRate)*100).toFixed(2)}%
+                                                <span className="label">custom rate</span>
                                                 </Typography>
                                             </CardContent>
                                         </Card>
                       <Card sx={{ minWidth: 49.5 + "%", height: 175 }}  className='gradientLight'>
-                                            <CardContent>
-                                                <div className='iconStyle'>
-                                                <PreviewIcon/>
-                                                </div>
-                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
-                                                81.62%
+                      <CardContent>
+                                              <div >
+                                               <Typography gutterBottom variant="body2" component="div" sx={{color:"#ee14bb", fontSize:"15px"}}>
+                                                {data4cards?.publisher_name}
                                                 </Typography>
-                                                <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1"}}>
-                                                Viewability rate
+    
+                                                <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1", fontSize:"15px"}}>
+                                                <span>M-rec</span> | <span>Yesterday</span>
+                                                </Typography>
+                                               </div>
+
+                                                
+                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
+                                                {Number(parseFloat(yesterdayAdslotAverages['mrec']?.averageViewRate)*100).toFixed(2)}%
+                                                <span className="label">view rate</span>
+                                                </Typography>
+                                              
+                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
+                                                {Number(parseFloat(yesterdayAdslotAverages['mrec']?.averageCustomViewRate)*100).toFixed(2)}%
+                                                <span className="label">custom rate</span>
                                                 </Typography>
                                             </CardContent>
                                         </Card>

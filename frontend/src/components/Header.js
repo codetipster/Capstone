@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import {
     AppBar,
     Container,
@@ -13,7 +14,7 @@ import {
   import { useNavigate } from "react-router-dom";
   
   
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles(() => ({
     title: {
       flex: 1,
       color: "white",
