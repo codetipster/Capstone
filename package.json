@@ -4,7 +4,7 @@
   "description": "This repository contains a Node.js application designed to interact with the Xandr API. The tool fetches and displays viewability reports for specified publishers and ad slots. It's built for internal use to aid in analyzing ad performance data and is expected to evolve over time as we understand more about our reporting needs. This project is part of an ongoing effort to automate and enhance our advertising analytics capabilities.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "dev": "nodemon index.js",
     "start": "node index.js",
     "lint": "eslint . --ext .js"
@@ -23,6 +23,7 @@
   "dependencies": {
     "anx-api": "^8.0.3",
     "axios": "^1.4.0",
+    "chai": "^4.4.1",
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
     "csvtojson": "^2.0.10",
@@ -38,6 +39,8 @@
   "devDependencies": {
     "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.1"
+    "eslint-plugin-import": "^2.29.1",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.4"
   }
 }

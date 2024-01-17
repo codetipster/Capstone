@@ -21,6 +21,15 @@ app.use(session({
   },
 }));
 app.use(reportRoutes);
-app.listen(config.app.port, () => {
-  console.log(`Server running on port ${config.app.port}`);
-});
+
+// app.listen(config.app.port, () => {
+//   console.log(`Server running on port ${config.app.port}`);
+// });
+
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(config.app.port, () => {
+    console.log(`Server running on port ${config.app.port}`);
+  });
+}
+
+module.exports = app;
