@@ -12,7 +12,9 @@
   </a>
 </p>
 
-> This repository contains a Node.js application designed to interact with the Xandr API. The tool fetches and displays viewability reports for specified publishers and ad slots. It's built for internal use to aid in analyzing ad performance data and is expected to evolve over time as we understand more about our reporting needs. This project is part of an ongoing effort to automate and enhance our advertising analytics capabilities.
+> This repository contains a Node.js application designed to interact with the Xandr API. The tool fetches and displays viewability reports for specified publishers and ad slots. It's built for internal use to aid in analyzing ad performance data and is expected to evolve over time as we understand more about our reporting needs. This project is part of an ongoing effort to automate and enhance our advertising analytics capabilities. 
+
+> This GitHub repository hosts the codebase and documentation for an Ads Viewability Dashboard, a comprehensive tool developed as part of a capstone project aimed at revolutionizing the way Axel Springer's AdTech unit handles viewability data. The project is designed to automate and streamline the process of calculating and presenting crucial ad metrics, eliminating the need for manual computations and enhancing overall operational efficiency.
 
 ### 🏠 [Homepage](https://github.com/codetipster/xandr-report-tool#readme)
 

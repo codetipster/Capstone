@@ -1,9 +1,10 @@
 require('dotenv').config();
 
 // middleware/auth.js
+// eslint-disable-next-line consistent-return
 const auth = (req, res, next) => {
-  const authHeader = req.headers['authorization']
-  const token = authHeader && authHeader.split(' ')[1]
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) {
     return res.status(401).json({ message: 'Not authenticated' });
@@ -17,4 +18,3 @@ const auth = (req, res, next) => {
 };
 
 module.exports = auth;
-  

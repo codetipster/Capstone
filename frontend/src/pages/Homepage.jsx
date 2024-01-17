@@ -7,7 +7,6 @@ import { calculateAverageRates, calculateAverageDifferenceOfTwoDays, calculateTo
 
 
 
-
 const Homepage = () => {
   const { publishers } = useContext(DataContext);
   const [publisherData, setPublisherData] = useState({});

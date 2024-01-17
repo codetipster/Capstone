@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
+// eslint-disable-next-line react/prop-types
 const SelectButton = ({ children, selected, onClick }) => {
   const useStyles = makeStyles({
     selectbutton: {
@@ -25,6 +26,7 @@ const SelectButton = ({ children, selected, onClick }) => {
   const classes = useStyles();
 
   return (
+    // eslint-disable-next-line react/react-in-jsx-scope
     <span onClick={onClick} className={classes.selectbutton}>
       {children}
     </span>
