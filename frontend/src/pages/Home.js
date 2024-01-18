@@ -7,8 +7,8 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import { LinearProgress, makeStyles, CircularProgress } from '@material-ui/core';
-import AdsClickIcon from '@mui/icons-material/AdsClick';
-import PreviewIcon from '@mui/icons-material/Preview';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 import Sidenav from '../components/Sidenav.jsx';
 import Navbar from '../components/Navbar';
 import '../dash.css';
@@ -31,6 +31,7 @@ const Home = () => {
   const [todayAverages, setTodayAverages] = useState({});
   const [sizesData, setSizesData] = useState([]);
   const SelectedDateData = selectedPublisher?.data?.report;
+  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     const fetchDataForPublishers = async () => {
@@ -105,8 +106,35 @@ const Home = () => {
     console.log('yesterdayAdslotAverages from HOME: banner adslot not found');
   }
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <>
+    <Snackbar open={open}
+      autoHideDuration={6000}
+      onClose={handleClose}
+      style={{
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+      }}
+      >
+        <Alert onClose={handleClose} severity="info" sx={{ width: '100%' }}>
+        ATENTION! <br/>
+          Welcome to the Ads Viewability dashboard! Please take note of the following:<br/>
+          - Select a publisher from the list of available publishers to view metrics.<br/>
+          - For the date component, please reselect a date whenever you change a publisher so
+          as to be certain that the metrics for each date represents those of the selected
+          publisher.
+        </Alert>
+      </Snackbar>
       <div className="bgcolor">
         <Navbar combinedData={combinedData}/>
         {/* <Box sx={{ height: 70 }} /> */}
