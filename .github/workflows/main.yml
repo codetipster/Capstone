@@ -25,14 +25,11 @@ jobs:
       run: |
         npm run lint
 
-    - name: Install frontend dependencies
-      run: |
-        cd frontend
-        npm install --legacy-peer-deps
 
     - name: Run frontend ESLint
       run: |
         cd frontend
+        npm install --legacy-peer-deps
         npm run lint -- --config ../.eslintrc.js
 
     - name: Run tests
