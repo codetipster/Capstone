@@ -26,12 +26,6 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: [
-    'import',
-    'prettier',
-    'react',
-    
-  ],
   settings: {
     react: {
       version: 'detect',

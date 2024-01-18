@@ -33,7 +33,7 @@ jobs:
     - name: Run frontend ESLint
       run: |
         cd frontend
-        npm run lint
+        npm run lint -- --config ../.eslintrc.js
 
     - name: Run tests
       run: |
