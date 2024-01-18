@@ -9,23 +9,11 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
   ],
-  overrides: [
-    {
-      env: {
-        node: true,
-      },
-      files: [
-        '.eslintrc.{js,cjs}',
-      ],
-      parserOptions: {
-        sourceType: 'script',
-      },
-    },
-  ],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
+  plugins: ['react', 'prettier'],
   settings: {
     react: {
       version: 'detect',
