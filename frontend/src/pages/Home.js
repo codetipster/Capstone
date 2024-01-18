@@ -1,31 +1,29 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState, useContext } from "react";
-import Sidenav from "../components/Sidenav";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Navbar from "../components/Navbar";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Stack from "@mui/material/Stack";
-import "../dash.css";
-import DataContext from "../contexts/DataContext";
-import BasicTabs from "../components/BasicTabs";
-import BasicTabs2 from "../components/BasicTabs2";
-import { calculateAverageRates, calculateAverageDifferenceOfTwoDays, calculateTodayAverages } from '../utils';
-import { usePublisher } from "../PublisherContext";
-import { LinearProgress, makeStyles, CircularProgress } from "@material-ui/core";
-import image from '.././assets/aaa.jpeg';
-import image2 from '.././assets/calendar.jpeg';
-import SelectPublisher from "../components/SelectPublisher";
-import Datepicker from "../components/Datepicker";
+import React, { useEffect, useState, useContext } from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Stack from '@mui/material/Stack';
+import { LinearProgress, makeStyles, CircularProgress } from '@material-ui/core';
 import AdsClickIcon from '@mui/icons-material/AdsClick';
 import PreviewIcon from '@mui/icons-material/Preview';
-
+import Sidenav from '../components/Sidenav.jsx';
+import Navbar from '../components/Navbar';
+import '../dash.css';
+import DataContext from '../contexts/DataContext';
+import BasicTabs from '../components/BasicTabs';
+import BasicTabs2 from '../components/BasicTabs2';
+import { calculateAverageRates, calculateAverageDifferenceOfTwoDays, calculateTodayAverages } from '../utils';
+import { usePublisher } from '../PublisherContext';
+import image from '../assets/aaa.jpeg';
+import image2 from '../assets/calendar.jpeg';
+import SelectPublisher from '../components/SelectPublisher';
+import Datepicker from '../components/Datepicker';
 
 const Home = () => {
   const { selectedPublisher } = usePublisher();
-     console.log('selectedPublisher from HOME', selectedPublisher)
   const { publishers } = useContext(DataContext);
   const [publisherData, setPublisherData] = useState({});
   const [averageRates, setAverageRates] = useState({});
@@ -34,217 +32,304 @@ const Home = () => {
   const [sizesData, setSizesData] = useState([]);
   const SelectedDateData = selectedPublisher?.data?.report;
 
-
   useEffect(() => {
     const fetchDataForPublishers = async () => {
       const token = localStorage.getItem('authToken');
-      let dataForAllPublishers = {};
-      
+      const dataForAllPublishers = {};
+
       try {
-        for (const publisher of publishers.available_publishers) {
-          const publisherId = Number(publisher.id);
-          const response = await fetch(`https://reports.asadcdn.com:5200/getViewabilityReport?publisher_id=${publisherId}&date_range=last7days`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-          });
-  
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-  
-          const data = await response.json();
-          dataForAllPublishers[publisher.id] = data;
-        }
-  
+        const responses = await Promise.all(
+          publishers.available_publishers.map(async (publisher) => {
+            const publisherId = Number(publisher.id);
+            const response = await fetch(
+              `https://reports.asadcdn.com:5200/getViewabilityReport?publisher_id=${publisherId}&date_range=last7days`,
+              {
+                headers: { Authorization: `Bearer ${token}` },
+              },
+            );
+
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          }),
+        );
+        responses.forEach((data, index) => {
+          dataForAllPublishers[publishers.available_publishers[index].id] = data;
+        });
         setPublisherData(dataForAllPublishers);
-  
-        //Calculate average rates and differences
-        let calculatedAverageRates = {};
-        let calculatedDifferences = {};
-        let todayAverages = {};
-        for (const [publisherId, publisherInfo] of Object.entries(dataForAllPublishers)) {
+        // Calculate average rates and differences
+        const calculatedAverageRates = {};
+        const calculatedDifferences = {};
+        const calculatedTodayAverages = {};
+        Object.entries(dataForAllPublishers).forEach(([publisherId, publisherInfo]) => {
           calculatedAverageRates[publisherId] = calculateAverageRates(publisherInfo);
           calculatedDifferences[publisherId] = calculateAverageDifferenceOfTwoDays(publisherInfo);
-          todayAverages[publisherId] = calculateTodayAverages(publisherInfo);
-        }
-  
+          calculatedTodayAverages[publisherId] = calculateTodayAverages(publisherInfo);
+        });
         setAverageRates(calculatedAverageRates);
         setDifferences(calculatedDifferences);
-        setTodayAverages(todayAverages);
-  
+        setTodayAverages(calculatedTodayAverages);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-  
     fetchDataForPublishers();
   }, [publishers]);
 
- 
-  const combinedData = (publishers.available_publishers || []).map(publisher => {
-    return {
-      ...publisher, 
-      data: publisherData[publisher.id], 
-      averages: averageRates[publisher.id], 
-      difference: differences[publisher.id],
-      todayAverages: todayAverages[publisher.id]
-    };
-  });
+  const combinedData = (publishers.available_publishers || []).map((publisher) => ({
+    ...publisher,
+    data: publisherData[publisher.id],
+    averages: averageRates[publisher.id],
+    difference: differences[publisher.id],
+    todayAverages: todayAverages[publisher.id],
+  }));
 
   console.log('combinedData homepage HOME', combinedData);
 
   const data4cards = selectedPublisher?.data?.report[6];
-  console.log('data4cards from HOME', data4cards)
-  
-  const yesterdayAdslotAverages = {}
-  if (data4cards){
-    data4cards.adslots.forEach(adslot => {
+  console.log('data4cards from HOME', data4cards);
+
+  const yesterdayAdslotAverages = {};
+  if (data4cards) {
+    data4cards.adslots.forEach((adslot) => {
       yesterdayAdslotAverages[adslot.slot] = {
         averageViewRate: adslot.average_view_rate,
-        averageCustomViewRate: adslot.average_custom_view_rate
+        averageCustomViewRate: adslot.average_custom_view_rate,
       };
-      });
+    });
   }
-  if (yesterdayAdslotAverages['banner']) {
-    console.log('yesterdayAdslotAverages from HOME', yesterdayAdslotAverages['banner'].averageViewRate);
+  if (yesterdayAdslotAverages.banner) {
+    console.log('yesterdayAdslotAverages from HOME', yesterdayAdslotAverages.banner.averageViewRate);
   } else {
     console.log('yesterdayAdslotAverages from HOME: banner adslot not found');
   }
-  
 
   return (
     <>
       <div className="bgcolor">
         <Navbar combinedData={combinedData}/>
         {/* <Box sx={{ height: 70 }} /> */}
-        <Box sx={{ display: "flex", height: 70 }}>
+        <Box sx={{ display: 'flex', height: 70 }}>
           <Sidenav />
           {/* Box containing the top info cards  */}
           <Box component="main" sx={{ flexGrow: 1, p: 2 }}>
             {/* Parent Grid */}
-            
+
             <Grid container spacing={2}>
               {/* First Child Grid takes 8 of 12 columns */}
               <Grid item xs={8}>
                 <Stack spacing={2} direction="row">
                   <Card
                     sx={{
-                      minWidth: 49 + "%",
+                      minWidth: `${49}%`,
                       height: 175,
-                      backgroundColor: "#eceff1",
+                      backgroundColor: '#eceff1',
                     }}
                   >
                     <Stack spacing={2} direction="row">
-                      <Card sx={{ minWidth: 49.5 + "%", height: 175 }} className='gradient'>
-                                            <CardContent>
-                                               <div >
-                                               <Typography gutterBottom variant="body2" component="div" sx={{color:"#ee14bb", fontSize:"15px"}}>
-                                                {data4cards?.publisher_name}
-                                                </Typography>
-    
-                                                <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1", fontSize:"15px"}}>
-                                                <span>Banner</span> | <span>Yesterday</span>
-                                                </Typography>
-                                               </div>
+                      <Card sx={{ minWidth: `${49.5}%`, height: 175 }} className='gradient'>
+                        <CardContent>
+                          <div >
+                            <Typography
+                            gutterBottom
+                            variant="body2"
+                            component="div"
+                            sx={{ color: '#ee14bb', fontSize: '15px' }}>
+                            {data4cards?.publisher_name}
+                            </Typography>
 
-                                                
-                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
-                                                {Number(parseFloat(yesterdayAdslotAverages['banner']?.averageViewRate)*100).toFixed(2)}%
-                                                <span className="label">view rate</span>
-                                                </Typography>
-                                              
-                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
-                                                {Number(parseFloat(yesterdayAdslotAverages['banner']?.averageCustomViewRate)*100).toFixed(2)}%
-                                                <span className="label">custom rate</span>
-                                                </Typography>
-                                               
-                                                
-                                                
-                                                
-                                            </CardContent>
-                                        </Card>
+                            <Typography
+                              gutterBottom
+                              variant="body2"
+                              component="div"
+                              sx={{ color: '#ccd1d1', fontSize: '15px' }}>
+                            <span>Banner</span> | <span>Yesterday</span>
+                            </Typography>
+                          </div>
 
-                                        <Card sx={{ minWidth: 49.5 + "%", height: 175 }} className='gradientLight'>
-                                            <CardContent>
-                                              <div >
-                                               <Typography gutterBottom variant="body2" component="div" sx={{color:"#ee14bb", fontSize:"15px"}}>
-                                                {data4cards?.publisher_name}
-                                                </Typography>
-    
-                                                <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1", fontSize:"15px"}}>
-                                                <span>Super banner</span> | <span>Yesterday</span>
-                                                </Typography>
-                                               </div>
+                          <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          sx={{ color: '#ffffff' }}>
+                          {
+                            Number(
+                              parseFloat(
+                                yesterdayAdslotAverages.banner?.averageViewRate,
+                              ) * 100,
+                            ).toFixed(2)
+                            }%
+                          <span className="label">view rate</span>
+                          </Typography>
 
-                                                
-                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
-                                                {Number(parseFloat(yesterdayAdslotAverages['superbanner']?.averageViewRate)*100).toFixed(2)}%
-                                                <span className="label">view rate</span>
-                                                </Typography>
-                                              
-                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
-                                                {Number(parseFloat(yesterdayAdslotAverages['superbanner']?.averageCustomViewRate)*100).toFixed(2)}%
-                                                <span className="label">custom rate</span>
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
+                          <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          sx={{ color: '#ffffff' }}>
+                          {Number(
+                            parseFloat(
+                              yesterdayAdslotAverages.banner?.averageCustomViewRate,
+                            ) * 100,
+                          ).toFixed(2)
+                              }%
+                          <span className="label">custom rate</span>
+                          </Typography>
+
+                        </CardContent>
+                      </Card>
+
+                      <Card sx={{ minWidth: `${49.5}%`, height: 175 }} className='gradientLight'>
+                        <CardContent>
+                          <div >
+                            <Typography
+                            gutterBottom
+                            variant="body2"
+                            component="div"
+                            sx={{ color: '#ee14bb', fontSize: '15px' }}>
+                            {data4cards?.publisher_name}
+                            </Typography>
+
+                            <Typography
+                              gutterBottom
+                              variant="body2"
+                              component="div"
+                              sx={{ color: '#ccd1d1', fontSize: '15px' }}>
+                              <span>Super banner</span> | <span>Yesterday</span>
+                            </Typography>
+                          </div>
+
+                          <Typography
+                           gutterBottom
+                           variant="h5"
+                           component="div"
+                           sx={{ color: '#ffffff' }}>
+                              {Number(
+                                parseFloat(
+                                  yesterdayAdslotAverages.superbanner?.averageViewRate,
+                                ) * 100,
+                              ).toFixed(2)
+                              }%
+                            <span className="label">view rate</span>
+                          </Typography>
+
+                          <Typography
+                           gutterBottom
+                           variant="h5"
+                           component="div"
+                           sx={{ color: '#ffffff' }}>
+                              {Number(
+                                parseFloat(
+                                  yesterdayAdslotAverages.superbanner?.averageCustomViewRate,
+                                ) * 100,
+                              ).toFixed(2)
+                              }%
+                            <span className="label">custom rate</span>
+                          </Typography>
+                        </CardContent>
+                      </Card>
                     </Stack>
                   </Card>
                   <Card
                     sx={{
-                      minWidth: 49 + "%",
+                      minWidth: `${49}%`,
                       height: 175,
-                      backgroundColor: "#eceff1",
+                      backgroundColor: '#eceff1',
                     }}
                   >
                     <Stack spacing={2} direction="row">
-                      <Card sx={{ minWidth: 49.5 + "%", height: 175 }} className='gradient'>
-                      <CardContent>
-                                              <div >
-                                               <Typography gutterBottom variant="body2" component="div" sx={{color:"#ee14bb", fontSize:"15px"}}>
-                                                {data4cards?.publisher_name}
-                                                </Typography>
-    
-                                                <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1", fontSize:"15px"}}>
-                                                <span>Sky</span> | <span>Yesterday</span>
-                                                </Typography>
-                                               </div>
+                      <Card sx={{ minWidth: `${49.5}%`, height: 175 }} className='gradient'>
+                        <CardContent>
+                          <div >
+                            <Typography
+                              gutterBottom
+                              variant="body2"
+                              component="div"
+                              sx={{ color: '#ee14bb', fontSize: '15px' }}>
+                              {data4cards?.publisher_name}
+                            </Typography>
 
-                                                
-                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
-                                                {Number(parseFloat(yesterdayAdslotAverages['sky']?.averageViewRate)*100).toFixed(2)}%
-                                                <span className="label">view rate</span>
-                                                </Typography>
-                                              
-                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
-                                                {Number(parseFloat(yesterdayAdslotAverages['sky']?.averageCustomViewRate)*100).toFixed(2)}%
-                                                <span className="label">custom rate</span>
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
-                      <Card sx={{ minWidth: 49.5 + "%", height: 175 }}  className='gradientLight'>
-                      <CardContent>
-                                              <div >
-                                               <Typography gutterBottom variant="body2" component="div" sx={{color:"#ee14bb", fontSize:"15px"}}>
-                                                {data4cards?.publisher_name}
-                                                </Typography>
-    
-                                                <Typography gutterBottom variant="body2" component="div" sx={{color:"#ccd1d1", fontSize:"15px"}}>
-                                                <span>M-rec</span> | <span>Yesterday</span>
-                                                </Typography>
-                                               </div>
+                            <Typography
+                              gutterBottom
+                              variant="body2"
+                              component="div"
+                              sx={{ color: '#ccd1d1', fontSize: '15px' }}>
+                              <span>Sky</span> | <span>Yesterday</span>
+                            </Typography>
+                          </div>
 
-                                                
-                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
-                                                {Number(parseFloat(yesterdayAdslotAverages['mrec']?.averageViewRate)*100).toFixed(2)}%
-                                                <span className="label">view rate</span>
-                                                </Typography>
-                                              
-                                                <Typography gutterBottom variant="h5" component="div" sx={{color:"#ffffff"}}>
-                                                {Number(parseFloat(yesterdayAdslotAverages['mrec']?.averageCustomViewRate)*100).toFixed(2)}%
-                                                <span className="label">custom rate</span>
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
+                          <Typography gutterBottom variant="h5" component="div" sx={{ color: '#ffffff' }}>
+                            {Number(
+                              parseFloat(
+                                yesterdayAdslotAverages.sky?.averageViewRate,
+                              ) * 100,
+                            ).toFixed(2)
+                                }%
+                              <span className="label">view rate</span>
+                          </Typography>
+
+                          <Typography gutterBottom variant="h5" component="div" sx={{ color: '#ffffff' }}>
+                            {Number(
+                              parseFloat(
+                                yesterdayAdslotAverages.sky?.averageCustomViewRate,
+                              ) * 100,
+                            ).toFixed(2)
+                                }%
+                              <span className="label">custom rate</span>
+                          </Typography>
+                        </CardContent>
+                      </Card>
+
+                    <Card sx={{ minWidth: `${49.5}%`, height: 175 }} className='gradientLight'>
+                      <CardContent>
+                        <div >
+                          <Typography
+                          gutterBottom
+                          variant="body2"
+                          component="div"
+                          sx={{ color: '#ee14bb', fontSize: '15px' }}>
+                          {data4cards?.publisher_name}
+                          </Typography>
+
+                          <Typography
+                            gutterBottom
+                            variant="body2"
+                            component="div"
+                            sx={{ color: '#ccd1d1', fontSize: '15px' }}>
+                          <span>M-rec</span> | <span>Yesterday</span>
+                          </Typography>
+                         </div>
+
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="div"
+                            sx={{ color: '#ffffff' }}>
+                          {Number(
+                            parseFloat(
+                              yesterdayAdslotAverages.mrec?.averageViewRate,
+                            ) * 100,
+                          ).toFixed(2)
+                              }%
+                          <span className="label">view rate</span>
+                          </Typography>
+
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="div"
+                            sx={{ color: '#ffffff' }}>
+                          {Number(
+                            parseFloat(
+                              yesterdayAdslotAverages.mrec?.averageCustomViewRate,
+                            ) * 100,
+                          ).toFixed(2)
+                              }%
+                          <span className="label">custom rate</span>
+                          </Typography>
+                      </CardContent>
+                    </Card>
                     </Stack>
                   </Card>
                 </Stack>
@@ -281,16 +366,18 @@ const Home = () => {
                             style={{ marginBottom: 1 }}
                           />
                       </div>
-                      <div className="totalCard">  
+                      <div className="totalCard">
                       {!SelectedDateData ? (
                         <LinearProgress
-                        style={{ color: "gold" }}
+                        style={{ color: 'gold' }}
                         size={250}
                         thickness={1}
                         />
-                    ) : (
-                        <Datepicker SelectedDateData={SelectedDateData} setSizesData={setSizesData}/>
-                    )}
+                      ) : (
+                        <Datepicker
+                         SelectedDateData={SelectedDateData}
+                         setSizesData={setSizesData}/>
+                      )}
                       </div>
                     </Stack>
                   </Card>
@@ -303,32 +390,32 @@ const Home = () => {
             {/* Parent Grid */}
             <Grid container spacing={2}>
               <Grid item xs={7}>
-                <Card sx={{ height: 60 + "vh" }}>
+                <Card sx={{ height: `${60}vh` }}>
                   <CardContent>
                     {/* <BasicTabs /> */}
                     {!selectedPublisher ? (
                         <LinearProgress
-                        style={{ color: "gold" }}
+                        style={{ color: 'gold' }}
                         size={250}
                         thickness={1}
                         />
-                    ) : (                        
-                        <BasicTabs />    
+                    ) : (
+                        <BasicTabs />
                     )}
                   </CardContent>
                 </Card>
               </Grid>
               <Grid item xs={5}>
-                <Card sx={{ height: 60 + "vh" }}>
+                <Card sx={{ height: `${60}vh` }}>
                   <CardContent>
                     {!selectedPublisher ? (
                         <LinearProgress
-                        style={{ color: "gold" }}
+                        style={{ color: 'gold' }}
                         size={250}
                         thickness={1}
                         />
-                    ) : (   
-                        <BasicTabs2 sizesData={sizesData}/>    
+                    ) : (
+                        <BasicTabs2 sizesData={sizesData}/>
                     )}
                   </CardContent>
                 </Card>
@@ -340,5 +427,4 @@ const Home = () => {
     </>
   );
 };
-
 export default Home;

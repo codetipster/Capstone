@@ -23,6 +23,3 @@ const overlayStyle = {
 };
 
 export default LoadingOverlay;
-
-
-

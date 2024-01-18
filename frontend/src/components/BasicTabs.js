@@ -7,9 +7,10 @@ import Box from '@mui/material/Box';
 import PublisherInfo from './PublisherInfo';
 import PublisherInfo2 from './PublisherInfo2';
 
-
 function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const {
+    children, value, index, ...other
+  } = props;
 
   return (
     <div
@@ -48,24 +49,20 @@ export default function BasicTabs() {
     setValue(newValue);
   };
 
-
-
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="View Rate" {...a11yProps(0)} />
           <Tab label="Custom View Rate" {...a11yProps(1)} />
-          
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0} >
-        <PublisherInfo /> 
+        <PublisherInfo />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <PublisherInfo2 /> 
+        <PublisherInfo2 />
       </CustomTabPanel>
-      
     </Box>
   );
 }

@@ -1,49 +1,48 @@
 /* eslint-disable react/react-in-jsx-scope */
 import {
-    AppBar,
-    Container,
-    Toolbar,
-    Typography,
-  } from "@material-ui/core";
-  import {
-    createTheme,
-    makeStyles,
-    ThemeProvider,
-  } from "@material-ui/core/styles";
-  
-  import { useNavigate } from "react-router-dom";
-  
-  
-  const useStyles = makeStyles(() => ({
-    title: {
-      flex: 1,
-      color: "white",
-      fontFamily: "Montserrat",
-      fontWeight: "bold",
-      cursor: "pointer",
+  AppBar,
+  Container,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
+import {
+  createTheme,
+  makeStyles,
+  ThemeProvider,
+} from '@material-ui/core/styles';
+
+import { useNavigate } from 'react-router-dom';
+
+const useStyles = makeStyles(() => ({
+  title: {
+    flex: 1,
+    color: 'white',
+    fontFamily: 'Montserrat',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+  },
+}));
+
+const darkTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#fff',
     },
-  }));
-  
-  const darkTheme = createTheme({
-    palette: {
-      primary: {
-        main: "#fff",
-      },
-      type: "dark",
-    },
-  });
-  
-  function Header() {
-    const classes = useStyles();
-    const navigate = useNavigate();
-  
-    return (
+    type: 'dark',
+  },
+});
+
+function Header() {
+  const classes = useStyles();
+  const navigate = useNavigate();
+
+  return (
       <ThemeProvider theme={darkTheme}>
         <AppBar color="transparent" position="static">
           <Container>
             <Toolbar>
               <Typography
-                onClick={() => navigate("/")}
+                onClick={() => navigate('/')}
                 variant="h6"
                 className={classes.title}
               >
@@ -65,7 +64,7 @@ import {
           </Container>
         </AppBar>
       </ThemeProvider>
-    );
-  }
-  
-  export default Header;
+  );
+}
+
+export default Header;

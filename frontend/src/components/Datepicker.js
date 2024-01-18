@@ -6,13 +6,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-
-
-export default function Datepicker({SelectedDateData, setSizesData}) {
-  //const { setSelectedDate, sizesData, updateSizesData } = useDateData();
-  console.log('SelectedDateData from datepicker',SelectedDateData)
+export default function Datepicker({ SelectedDateData, setSizesData }) {
+  // const { setSelectedDate, sizesData, updateSizesData } = useDateData();
+  console.log('SelectedDateData from datepicker', SelectedDateData);
   const [selectedDate, setSelectedDate] = useState(null);
-  //const [sizesData, setSizesData] = useState([]);
+  // const [sizesData, setSizesData] = useState([]);
 
   const formatDate = (date) => {
     const yyyy = date.getFullYear();
@@ -27,7 +25,7 @@ export default function Datepicker({SelectedDateData, setSizesData}) {
 
     // Extract sizes data from adslots for the selected date
     const sizes = selectedData?.adslots.map((slot) => ({
-      date: date,
+      date,
       slot: slot.slot,
       sizes: slot.sizes,
     })) || [];
@@ -41,7 +39,6 @@ export default function Datepicker({SelectedDateData, setSizesData}) {
     updateSizesData(newDate);
   };
 
-
   useEffect(() => {
     // Set default date to yesterday when the component first loads
     const yesterday = new Date();
@@ -52,7 +49,7 @@ export default function Datepicker({SelectedDateData, setSizesData}) {
     updateSizesData(formatDate(yesterday));
   }, []); // Run this effect only once on component mount
 
-  //console.log('sizesData from datepicker',sizesData)
+  // console.log('sizesData from datepicker',sizesData)
 
   return (
     <div >
@@ -64,7 +61,7 @@ export default function Datepicker({SelectedDateData, setSizesData}) {
           value={selectedDate}
           onChange={handleDateChange}
           label="Publisher"
-          sx={{ color: "#D709A0"}}
+          sx={{ color: '#D709A0' }}
         >
           <MenuItem value="" >
             <em>None</em>

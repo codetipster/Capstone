@@ -1,23 +1,21 @@
 /* eslint-disable react/prop-types */
 import * as React from 'react';
-//import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-//import Datepicker from './Datepicker';
+// import Datepicker from './Datepicker';
 
-//import { usePublisher } from '../PublisherContext';
-//import PublishersTable from './PublishersTable';
+// import { usePublisher } from '../PublisherContext';
+// import PublishersTable from './PublishersTable';
 import PublishersTable2 from './PublishersTable2';
 
-
 function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
- 
-
-
+  const {
+    children, value, index, ...other
+  } = props;
 
   return (
     <div
@@ -49,21 +47,18 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs({sizesData}) {
+export default function BasicTabs({ sizesData }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  console.log('sizesData from basicTabs',sizesData)
-
-
-
+  console.log('sizesData from basicTabs', sizesData);
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>  
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
         {sizesData.map((item, index) => (
           <Tab key={index} label={item.slot} {...a11yProps(index)} />
@@ -73,7 +68,7 @@ export default function BasicTabs({sizesData}) {
       {sizesData.map((item, index) => (
         <CustomTabPanel value={value} index={index} key={index}>
           <PublishersTable2 sizes={item.sizes} />
-          
+
         </CustomTabPanel>
       ))}
     </Box>

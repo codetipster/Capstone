@@ -4,24 +4,21 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { usePublisher } from './../PublisherContext'; 
+import { usePublisher } from '../PublisherContext';
 
-
-export default function SelectPublisher({combinedData}) {
+export default function SelectPublisher({ combinedData }) {
   const { selectedPublisher, setPublisher } = usePublisher();
 
   const handleChange = (event) => {
-    
-    const selectedPublisher = combinedData.find(
-      (item) => item.id === event.target.value || item.name === event.target.value
-      
+    const Publisher = combinedData.find(
+      (item) => item.id === event.target.value || item.name === event.target.value,
+
     );
-    if (selectedPublisher) {
-      console.log('Selected Publisher:', selectedPublisher);
+    if (Publisher) {
+      console.log('Selected Publisher:', Publisher);
       // You can use the selectedPublisher object as needed in your application
-      
-        setPublisher(selectedPublisher);
-      
+
+      setPublisher(Publisher);
     }
   };
 
@@ -44,8 +41,6 @@ export default function SelectPublisher({combinedData}) {
   //   }
   // };
 
-  
-
   return (
     <div >
       <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
@@ -56,7 +51,7 @@ export default function SelectPublisher({combinedData}) {
           value={selectedPublisher ? selectedPublisher.name : ''}
           onChange={handleChange}
           label="Publisher"
-          sx={{ color: "#D709A0"}}
+          sx={{ color: '#D709A0' }}
         >
           <MenuItem value="" >
             <em>None</em>

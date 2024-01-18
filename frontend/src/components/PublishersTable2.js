@@ -8,10 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-
-
 export default function DenseTable({ sizes }) {
-    return (
+  return (
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
@@ -25,7 +23,7 @@ export default function DenseTable({ sizes }) {
           </TableHead>
           <TableBody>
             {sizes.map((row) => (
-                
+
               <TableRow
                 key={row.size}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -34,22 +32,22 @@ export default function DenseTable({ sizes }) {
                   {row.size}
                 </TableCell>
                 <TableCell align="right" style={{
-                            color: row.view_rate > 0 ? "rgb(14, 203, 129)" : "red",
-                            fontWeight: 500,
-                          }}>{Number(parseFloat(row?.view_rate) * 100).toFixed(2)}%</TableCell>
+                  color: row.view_rate > 0 ? 'rgb(14, 203, 129)' : 'red',
+                  fontWeight: 500,
+                }}>{Number(parseFloat(row?.view_rate) * 100).toFixed(2)}%</TableCell>
                 <TableCell align="right" style={{
-                            color: row.custom_view_rate > 0 ? "rgb(14, 203, 129)" : "red",
-                            fontWeight: 500,
-                          }}>{Number(parseFloat(row?.custom_view_rate) * 100).toFixed(2)}%</TableCell>
+                  color: row.custom_view_rate > 0 ? 'rgb(14, 203, 129)' : 'red',
+                  fontWeight: 500,
+                }}>{Number(parseFloat(row?.custom_view_rate) * 100).toFixed(2)}%</TableCell>
                 <TableCell align="right" style={{
-                            color: row.impressions > 0 ? "rgb(14, 203, 129)" : "red",
-                            fontWeight: 500,
-                          }}>{row.impressions}</TableCell>
+                  color: row.impressions > 0 ? 'rgb(14, 203, 129)' : 'red',
+                  fontWeight: 500,
+                }}>{row.impressions}</TableCell>
                 <TableCell align="right">{row.impression_type}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-    );
-  }
+  );
+}

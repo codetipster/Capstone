@@ -13,31 +13,29 @@ const DataProvider = ({ children }) => {
     const token = localStorage.getItem('authToken');
     fetch('https://reports.asadcdn.com:5200/getViewablePublishers', {
       headers: {
-        'Authorization': `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
         throw new Error(`Server response was not ok. Status: ${response.status} ${response.statusText}`);
-      }
-    })
-    .then(data => {
-      setPublishers(data);
-      setLoading(false);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      setError(error);
-      setLoading(false);
-    });
+      })
+      .then((data) => {
+        setPublishers(data);
+        setLoading(false);
+      })
+      .catch((fetchError) => {
+        setError(fetchError);
+        setLoading(false);
+      });
   }, []);
 
-  
-
   return (
-    <DataContext.Provider value={{ publishers,publisherId, setPublisherId, loading, error }}>
+    <DataContext.Provider value={{
+      publishers, publisherId, setPublisherId, loading, error,
+    }}>
       {children}
     </DataContext.Provider>
   );
