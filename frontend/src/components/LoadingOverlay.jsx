@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Puff } from 'react-loader-spinner';
 
 const LoadingOverlay = () => {

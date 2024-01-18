@@ -54,8 +54,6 @@ export default function BasicTabs({ sizesData }) {
     setValue(newValue);
   };
 
-  console.log('sizesData from basicTabs', sizesData);
-
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
