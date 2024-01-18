@@ -16,7 +16,6 @@
 
 > This GitHub repository hosts the codebase and documentation for an Ads Viewability Dashboard, a comprehensive tool developed as part of a capstone project aimed at revolutionizing the way Axel Springer's AdTech unit handles viewability data. The project is designed to automate and streamline the process of calculating and presenting crucial ad metrics, eliminating the need for manual computations and enhancing overall operational efficiency.
 
-### 🏠 [Homepage](https://github.com/codetipster/xandr-report-tool#readme)
 
 ### ✨ [Demo](https://capstone-production-78af.up.railway.app/ )
 
@@ -81,13 +80,6 @@ npm run test   and
 npm run lint
 ```
 
-## Author
-
-👤 **Samuel Nzekwe**
-
-* Github: [@codetipster](https://github.com/codetipster)
-* LinkedIn: [@https:\/\/www.linkedin.com\/in\/samuel-nzekwe-50b899195\/](https://linkedin.com/in/https:\/\/www.linkedin.com\/in\/samuel-nzekwe-50b899195\/)
-
 ## 🤝 Contributing
 
 ## Have an idea to contribute ? Somethings to consider.
@@ -142,9 +134,17 @@ Open a pull request against the main repository. Provide a clear title and descr
 * Discuss and Iterate:
 Engage in discussions on your pull request. Be open to feedback and iterate on your changes based on community suggestions.
 
-
+### 🏠 [Homepage](https://github.com/codetipster/xandr-report-tool#readme)
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/codetipster/xandr-report-tool/issues). You can also take a look at the [contributing guide](https://github.com/codetipster/xandr-report-tool/blob/master/CONTRIBUTING.md).
+
+
+## Author
+
+👤 **Samuel Nzekwe**
+
+* Github: [@codetipster](https://github.com/codetipster)
+* LinkedIn: [@https:\/\/www.linkedin.com\/in\/samuel-nzekwe-50b899195\/](https://linkedin.com/in/https:\/\/www.linkedin.com\/in\/samuel-nzekwe-50b899195\/)
 
 ## Show your support
 
@@ -154,6 +154,3 @@ Give a ⭐️ if this project helped you!
 
 Copyright © 2024 AxelSpringer <br />
 This project is [ISC](https://github.com/codetipster/xandr-report-tool/blob/master/LICENSE) licensed.
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
