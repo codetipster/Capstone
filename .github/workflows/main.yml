@@ -35,3 +35,6 @@ jobs:
       run: |
         cd frontend
         npx eslint . --config ../.eslintrc.json
+
+    - name: Print frontend node_modules contents after ESLint
+      run: ls -l frontend/node_modules
