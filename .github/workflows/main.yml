@@ -30,7 +30,7 @@ jobs:
       run: |
         cd frontend
         npm install --legacy-peer-deps
-        npm run lint -- --config ../.eslintrc.js
+        npm run lint -- --config ../.eslintrc.json
 
     - name: Run tests
       run: |
