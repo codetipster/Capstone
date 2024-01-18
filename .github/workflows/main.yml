@@ -26,7 +26,7 @@ jobs:
     - name: Install frontend dependencies
       run: |
         cd frontend
-        npm install --legacy-peer-deps
+        npm install eslint-plugin-import --legacy-peer-deps
 
     - name: Print frontend node_modules contents
       run: ls -l frontend/node_modules
