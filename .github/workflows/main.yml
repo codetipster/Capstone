@@ -28,6 +28,9 @@ jobs:
         cd frontend
         npm install --legacy-peer-deps
 
+    - name: Print frontend node_modules contents
+      run: ls -l frontend/node_modules
+
     - name: Run frontend ESLint
       run: |
         cd frontend
