@@ -31,4 +31,4 @@ jobs:
     - name: Run frontend ESLint
       run: |
         cd frontend
-        npm run lint
+        npx eslint . --config ../.eslintrc.json
