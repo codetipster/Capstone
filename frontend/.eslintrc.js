@@ -6,6 +6,8 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
   ],
   overrides: [
     {
@@ -27,6 +29,7 @@ module.exports = {
   plugins: [
     'prettier',
     'react',
+    'import',
   ],
   settings: {
     react: {
