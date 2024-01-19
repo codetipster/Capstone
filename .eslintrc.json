@@ -1,14 +1,27 @@
 {
     "env": {
         "browser": true,
-        "commonjs": true,
-        "es2021": true
+        "es2021": true,
+        "node": true
     },
-    "extends": "airbnb-base",
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings"
+    ],
     "parserOptions": {
-        "ecmaVersion": "latest"
+        "ecmaVersion": "latest",
+        "sourceType": "module"
     },
+    "plugins": [
+        "react"
+    ],
     "rules": {
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }
