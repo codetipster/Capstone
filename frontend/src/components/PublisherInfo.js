@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 
 import React, { useState, useEffect } from 'react';
@@ -78,29 +79,7 @@ const PublisherInfo = () => {
     },
   };
 
-  // useEffect(() => {
-  //   // Destroy the previous chart instance before rendering a new one
-  //   if (chartInstance) {
-  //     chartInstance.destroy();
-  //   }
-
-  //   // Render the new chart instance
-  //   const newChartInstance = new Chart(document.getElementById('chart'), {
-  //     type: 'line',
-  //     data: chartData,
-  //     options: chartOptions,
-  //   });
-
-  //   // Save the new chart instance to state
-  //   setChartInstance(newChartInstance);
-
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     if (newChartInstance) {
-  //       newChartInstance.destroy();
-  //     }
-  //   };
-  // }, []);
+  
 
   useEffect(() => {
     // Check if selectedPublisher is available before rendering the chart
