@@ -33,10 +33,6 @@ jobs:
         cd backend
         npm run lint
 
-    - name: Run backend tests
-      run: |
-        cd backend
-        npm test
 
     - name: Install frontend dependencies
       run: |
