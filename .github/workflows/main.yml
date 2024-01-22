@@ -18,20 +18,25 @@ jobs:
       with:
         node-version: '20' # Use the version of Node.js that you're using in your project
 
-    - name: Install ESLint dependencies
-      run: |
-        npm install --save-dev eslint-config-airbnb-base@15.0.0 eslint@^8.2.0 eslint-plugin-import@^2.25.2
-
     - name: Install backend dependencies
       run: |
         cd backend
         npm install
 
+    - name: Install ESLint dependencies
+      run: |
+        cd backend
+        npm install --save-dev eslint-config-airbnb-base@15.0.0 eslint@^8.2.0 eslint-plugin-import@^2.25.2
+
     - name: Run backend ESLint
-      run: npm run lint
+      run: |
+        cd backend
+        npm run lint
 
     - name: Run backend tests
-      run: npm test
+      run: |
+        cd backend
+        npm test
 
     - name: Install frontend dependencies
       run: |
@@ -39,7 +44,11 @@ jobs:
         npm install --legacy-peer-deps
 
     - name: Run frontend ESLint
-      run: npm run lint
+      run: |
+        cd frontend
+        npm run lint
 
     - name: Run frontend tests
-      run: npm test
+      run: |
+        cd frontend
+        npm test
