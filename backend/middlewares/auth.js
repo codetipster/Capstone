@@ -3,10 +3,6 @@ require('dotenv').config();
 // middleware/auth.js
 // eslint-disable-next-line consistent-return
 const auth = (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://capstone-production-78af.up.railway.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(' ')[1];
 
