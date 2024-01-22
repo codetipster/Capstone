@@ -9,7 +9,14 @@ const env = process.env.NODE_ENV || 'development';
 // Load the appropriate configuration for the current environment
 const config = require('./config/config')[env];
 
-app.use(cors());
+const corsOptions = {
+  origin: 'https://capstone-production-78af.up.railway.app',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(session({
   secret: 'your secret key',
