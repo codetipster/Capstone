@@ -17,7 +17,7 @@ function Login({ setIsAuthenticated }) {
     setIsLoading(true); // Start loading when the request starts
 
     // POST request to '/auth' route with username and password
-    const response = await fetch('http://localhost:5000/auth', {
+    const response = await fetch('https://capstone-production-b983.up.railway.app/auth', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
